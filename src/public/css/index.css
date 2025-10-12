@@ -1,0 +1,122 @@
+.index-form {
+    max-width: 1230px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    background-color: #fff;
+}
+
+.index-form__tabs {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 30px;
+}
+
+.index__tab {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    padding: 10px 20px;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.index__tab--active {
+    color: #E60023;
+}
+
+.index__tab--active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #E60023;
+}
+
+.index__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 2%;
+    justify-content: flex-start;
+}
+
+.index__item {
+    width: 23.5%;
+    margin-bottom: 30px;
+    text-align: left;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.index__item-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #ddd;
+    object-fit: cover;
+    display: block;
+    border-radius: 6px;
+}
+
+.index__item-name {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ==================================== */
+/* レスポンシブ対応 (メディアクエリ) */
+/* ==================================== */
+
+/* タブレット (画面幅 768px 以下) */
+@media (max-width: 768px) {
+    .index-form {
+        padding: 20px 15px 40px;
+    }
+
+    .index__items {
+        gap: 20px 4%;
+    }
+
+    .index__item {
+        width: 48%;
+        margin-bottom: 20px;
+    }
+
+    .index__tab {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+}
+
+/* スマートフォン (画面幅 480px 以下) */
+@media (max-width: 480px) {
+    .index-form {
+        padding: 15px 10px 30px;
+    }
+
+    .index-form__tabs {
+        margin-bottom: 20px;
+    }
+
+    .index__tab {
+        font-size: 15px;
+        padding: 8px 10px;
+    }
+
+    .index__items {
+        gap: 15px 0;
+    }
+
+    .index__item {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,262 @@
+.purchases__form {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.purchase-content-wrapper {
+    display: flex;
+    gap: 40px;
+}
+
+.purchase__item {
+    flex: 2;
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.purchase-item__summary {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.purchase-item__img {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.item-summary__image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 20px;
+    background-color: #eee;
+    flex-shrink: 0;
+}
+
+.purchase-item__detail {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.purchase-item__name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.purchase-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FF5555;
+    margin: 0;
+}
+
+.separator {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+.purchase-item__payment,
+.purchase-item__address {
+    padding: 15px 0;
+}
+
+.payment__header,
+.address__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.purchase-payment,
+.delivery-address {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+}
+
+.address-edit:hover {
+    opacity: 0.8;
+}
+
+.payment-select {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.confirmed-address {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+.address-zip {
+    font-weight: bold;
+    margin: 0;
+}
+
+.address-full {
+    margin: 0;
+}
+
+.purchase__item-confirmation {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.confirmation-form {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.confirmation-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.confirmation-row:nth-child(1),
+.confirmation-row:nth-child(2) {
+    border-bottom: 1px solid #ddd;
+}
+
+.confirmation-row:nth-child(2) {
+    margin-bottom: 0;
+}
+
+.row-label {
+    flex-grow: 1;
+    text-align: left;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.row-value {
+    flex-shrink: 0;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.confirmation-row--total {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 1px solid #ddd;
+    display: none;
+}
+
+.confirm-button {
+    text-align: center;
+}
+
+.btn-purchase-submit {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #FF5555;
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.btn-purchase-submit:hover {
+    background-color: #e04a4a;
+}
+
+/* ==================================== */
+/* レスポンシブ対応 (画面幅 768px 以下) */
+/* ==================================== */
+@media (max-width: 768px) {
+    .purchases__form {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    .purchase-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .purchase__item,
+    .purchase__item-confirmation {
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .purchase__title {
+        display: block;
+    }
+
+    .purchase-item__img {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .item-summary__image {
+        width: 80px;
+        height: 80px;
+        margin-right: 0;
+    }
+
+    .purchase-item__name {
+        font-size: 1.1rem;
+    }
+
+    .purchase-price {
+        font-size: 1.4rem;
+    }
+
+    .payment-select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .purchase-item__payment,
+    .purchase-item__address {
+        padding: 10px 0;
+    }
+
+        .row-label {
+            flex-grow: 0;
+            margin-right: 10px;
+            font-size: 0.95rem;
+            /* ラベルのフォントを少し小さくする */
+        }
+
+        .row-value {
+            font-size: 1rem;
+        }
+
+        .confirmation-row--total {
+            font-size: 1.1rem;
+        }
+}

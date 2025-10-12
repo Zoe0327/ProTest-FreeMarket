@@ -1,0 +1,304 @@
+body {
+    background-color: #f4f4f4;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+
+.items__sell-form {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sell-form__header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sell-form__header h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #333;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.section__img-title {
+    color: #000;
+}
+
+.sell__separator {
+    height: 1px;
+    background-color: #5F5F5F;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #5F5F5F;
+}
+
+
+.sell-form-group {
+    margin-bottom: 20px;
+    padding: 20px 0;
+}
+
+.sell-form-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.category-chips-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px 0;
+}
+
+.category-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #FF5555;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    border: none;
+}
+
+.sell-form-input,
+.sell-form-select,
+.sell-form-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.sell-form-input:focus,
+.sell-form-select:focus,
+.sell-form-textarea:focus {
+    border-color: #5F5F5F;
+    outline: none;
+}
+
+.sell-form-textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '▼';
+    font-size: 12px;
+    color: #555;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.sell-form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 35px;
+}
+
+
+.form-price .sell-form-label {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.price-input-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+.yen-mark {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.price-input-wrapper .sell-form-input {
+    width: 100%;
+}
+
+.image-upload-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+}
+
+.image-upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-preview-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px dashed #ccc;
+}
+
+.custom-file-upload-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #FF5555;
+    border: 1px solid #FF5555;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.custom-file-upload-btn:hover {
+    background-color: #f7f7f7;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.category-chips-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px 0;
+}
+
+.category-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #000;
+    border: 1px solid #eee;
+}
+
+
+.sell__item-button {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.sell__button-submit {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #FF5555;
+    /* 赤色のボタン */
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.sell__button-submit:hover {
+    background-color: #d0001a;
+}
+
+/* エラーメッセージ */
+.form__error {
+    color: #e60023;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* ==================================== */
+/* レスポンシブ対応 (メディアクエリ) */
+/* ==================================== */
+
+/* タブレット・中型デバイス (画面幅 768px 以下) */
+@media (max-width: 768px) {
+    .items__sell-form {
+        max-width: 90%;
+        margin: 30px auto;
+        padding: 20px 25px;
+    }
+
+    .sell-form__header h2 {
+        font-size: 24px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .sell-form-label {
+        font-size: 15px;
+    }
+
+    .sell__button-submit {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .item-preview-img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* スマートフォン (画面幅 480px 以下) */
+@media (max-width: 480px) {
+    .items__sell-form {
+        max-width: 100%;
+        margin: 15px 0;
+        padding: 15px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .sell-form__header h2 {
+        font-size: 22px;
+    }
+
+    .sell-form-group {
+        padding: 15px 0;
+    }
+
+    .category-chip {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+}
