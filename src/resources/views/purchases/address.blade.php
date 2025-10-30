@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile/address.css')}}">
+<link rel="stylesheet" href="{{ asset('css/purchases/address.css')}}">
 @endsection
 
 
@@ -15,23 +15,23 @@
     <div class="profile__address-title">
         <h1>住所の変更</h1>
     </div>
-    <form method="POST" action="{{ route('profile.address.update') }}" class="profile__address-content" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}" class="profile__address-content">
         @csrf
         <div class="profile__address-each">
             <p>郵便番号</p>
-            <input type="text" name="post_code" value="">
+            <input type="text" name="post_code" value="{{ old('post_code', $profile->post_code ?? '') }}">
             @error('post_code')<div class="error-message">{{ $message }}</div>@enderror
         </div>
 
         <div class="profile__address-each">
             <p>住所</p>
-            <input type="text" name="address" value="">
+            <input type="text" name="address" value="{{ old('address',  $profile->address ?? '') }}">
             @error('address')<div class="error-message">{{ $message }}</div>@enderror
         </div>
 
         <div class="profile__address-each">
             <p>建物名</p>
-            <input type="text" name="building" value="">
+            <input type="text" name="building" value="{{ old('building', $profile->building ?? '') }}">
             @error('building')<div class="error-message">{{ $message }}</div>@enderror
         </div>
 

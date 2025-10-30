@@ -15,14 +15,14 @@
             <h3 class="section__img-title">商品画像</h3>
             <div class="image-upload-wrapper">
                 <div class="image-upload-area">
-                    <img id="image-preview" src="https://placehold.co/200x200/eee/333?text=画像を選択" alt="商品画像プレビュー" class="item-preview-img">
+                    <img id="image-preview" class="item-preview-img hidden" alt="商品画像プレビュー">
                     <label for="image-upload" class="custom-file-upload-btn">
                         画像を選択する
                     </label>
-                    <input type="file" id="image-upload" name="image" accept="image/*" class="hidden-input">
+                    <input type="file" id="image-upload" name="item_img_url" accept="image/*" class="hidden-input">
                 </div>
             </div>
-            @error('image')
+            @error('item_img_url')
                 <p class="form__error">{{ $message }}</p>
             @enderror
         </div>
@@ -36,23 +36,13 @@
             <div class="sell-form-group">
                 <p class="sell-form-label">カテゴリー</p>
                 <div class="category-chips-wrapper">
-                    <!-- DBからの取得を想定し、タグ風のスタイルを適用 -->
-                    <span class="category-chip">ファッション</span>
-                    <span class="category-chip">家電</span>
-                    <span class="category-chip">インテリア</span>
-                    <span class="category-chip">レディース</span>
-                    <span class="category-chip">メンズ</span>
-                    <span class="category-chip">コスメ</span>
-                    <span class="category-chip">本</span>
-                    <span class="category-chip">ゲーム</span>
-                    <span class="category-chip">スポーツ</span>
-                    <span class="category-chip">キッチン</span>
-                    <span class="category-chip">ハンドメイド</span>
-                    <span class="category-chip">アクセサリー</span>
-                    <span class="category-chip">おもちゃ</span>
-                    <span class="category-chip">ベビー・キッズ</span>
-                    <!-- 実際には選択可能な要素 (例: hidden input や select) に置き換える必要があります -->
+                    @foreach ($categories as $category)
+                        <span class="category-chip" data-id="{{ $category->id }}" onclick="toggleCategory(this)">
+                            {{ $category->category_name }}
+                        </span>
+                    @endforeach
                 </div>
+                <input type="hidden" name="category_id" id="selected-categories" value="{{ old('category_id') ? implode(',', (array) old('category_id')) : '' }}">
                 @error('category_id')
                     <p class="form__error">{{ $message }}</p>
                 @enderror
@@ -62,12 +52,14 @@
                 <div class="select-wrapper">
                     <select name="condition_id" class="sell-form-select">
                         <option value="">選択してください</option>
-                        <option value="1">良好</option>
-                        <option value="2">目立った傷や汚れなし</option>
-                        <option value="3">やや傷や汚れあり</option>
-                        <option value="4">状態が悪い</option>
+                        @foreach ($conditions as $condition)
+                        <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
+                        @endforeach
                     </select>
                 </div>
+                @error('condition_id')
+                    <p class="form__error">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-section">
@@ -84,13 +76,13 @@
 
                 <div class="sell-form-group">
                     <p class="sell-form-label">ブランド名</p>
-                    <input type="text" name="brand" value="{{ old('brand') }}" class="sell-form-input" placeholder="" />
+                    <input type="text" name="brand_name" value="{{ old('brand_name') }}" class="sell-form-input" placeholder="" />
                 </div>
 
                 <div class="sell-form-group">
                     <p class="sell-form-label">商品の説明</p>
-                    <textarea name="detail" class="sell-form-textarea" placeholder="">{{ old('detail') }}</textarea>
-                    @error('detail')
+                    <textarea name="description" class="sell-form-textarea">{{ old('description') }}</textarea>
+                    @error('description')
                         <p class="form__error">{{ $message }}</p>
                     @enderror
                 </div>
@@ -113,5 +105,57 @@
         </div>
     </form>
 </div>
+<script>
+    function toggleCategory(el) {
+        const hiddenInput = document.getElementById('selected-categories');
+        let selected = hiddenInput.value ? hiddenInput.value.split(',') : [];
 
+        const clickedId = el.dataset.id;
+
+        if (selected.includes(clickedId)) {
+            // 選択解除
+            selected = selected.filter(id => id !== clickedId);
+            el.classList.remove('selected');
+        } else {
+            // 選択追加
+            selected.push(clickedId);
+            el.classList.add('selected');
+        }
+
+        hiddenInput.value = selected.join(',');
+    }
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('image-preview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result; // 画像をプレビューに表示
+                preview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file); // ファイルを読み込む
+        }
+    });
+    </script>
+
+    <style>
+    .category-chip {
+        display: inline-block;
+        padding: 5px 12px;
+        margin: 4px;
+        border: 1px solid #FF5555;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .category-chip.selected {
+        background-color: #FF5555;
+        color: #fff;
+        border-color: #FF5555;
+    }
+    .hidden {
+        display: none;
+    }
+    </style>
 @endsection

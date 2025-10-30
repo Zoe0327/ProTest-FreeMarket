@@ -74,11 +74,19 @@ body {
 .category-chip {
     display: inline-block;
     padding: 6px 12px;
-    background-color: #FF5555;
-    color: #fff;
+    background-color: #fff;
+    color: #FF5555;
     border-radius: 20px;
     font-size: 14px;
     border: none;
+}
+
+.category-chip .selected {
+    background-color: #FF5555;
+    color: #fff;
+    border-color: #FF5555;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .sell-form-input,
@@ -152,6 +160,8 @@ body {
 
 .price-input-wrapper .sell-form-input {
     width: 100%;
+    padding-left: 30px;
+    box-sizing: border-box;
 }
 
 .image-upload-wrapper {
@@ -195,24 +205,6 @@ body {
 .hidden-input {
     display: none;
 }
-
-.category-chips-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 5px 0;
-}
-
-.category-chip {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: #f0f0f0;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #000;
-    border: 1px solid #eee;
-}
-
 
 .sell__item-button {
     margin-top: 40px;

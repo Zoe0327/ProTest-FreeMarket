@@ -12,7 +12,7 @@
     <header class="auth-header">
         <div class="auth-header__inner">
             <a href="{{ route('items.index') }}" class="auth__logo">
-                <img src="{{ asset('images/logo.svg') }}" alt="COACHTECHロゴ">
+                <img src="{{ asset('storage/item_images/logo.svg') }}" alt="COACHTECHロゴ">
             </a>
         </div>
     </header>

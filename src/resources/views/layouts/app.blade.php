@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/common.css')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @yield('css')
+    @yield('scripts')
 </head>
 <body>
     <header class="header">
@@ -15,7 +16,7 @@
             <div class="header-utilities">
                 {{-- ロゴ --}}
                 <a href="{{ route('items.index') }}" class="header__logo">
-                    <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo-img">
+                    <img src="{{ asset('storage/item_images/logo.svg') }}" alt="COACHTECH" class="header__logo-img">
                 </a>
 
                 {{-- 検索フォーム（全ページ共通） --}}
@@ -32,30 +33,31 @@
                 <div class="header__nav-wrap" id="js-nav-wrap">
                     <nav>
                         <ul class="header-nav">
+                            {{-- ログイン後 --}}
                             @auth
                                 {{-- ログイン中：マイページと出品、ログアウト --}}
-                                <li class="header-nav__item">
-                                    <a class="header-nav__link" href="{{ route('mypage.index') }}">マイページ</a>
-                                </li>
-                                <li class="header-nav__item">
-                                    <a class="header-nav__link" href="{{ route('sell.create') }}">出品</a>
-                                </li>
                                 <li class="header-nav__item">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="header-nav__button">ログアウト</button>
                                     </form>
                                 </li>
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link" href="{{ route('mypage.index') }}">マイページ</a>
+                                </li>
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link header-nav__sell-btn" href="{{ route('sell.create') }}">出品</a>
+                                </li>
+                            {{-- 未ログイン時 --}}
                             @else
-                                {{-- 未ログイン時：ログインと出品 --}}
                                 <li class="header-nav__item">
-                                    <a class="header-nav__link" href="{{ route('login.show') }}">ログイン</a>
+                                    <a class="header-nav__link" href="{{ route('login') }}">ログイン</a>
                                 </li>
                                 <li class="header-nav__item">
-                                    <a class="header-nav__link" href="{{ route('login.show') }}">マイページ</a>
+                                    <a class="header-nav__link" href="{{ route('login') }}">マイページ</a>
                                 </li>
                                 <li class="header-nav__item">
-                                    <a class="header-nav__link" href="{{ route('sell.create') }}">出品</a>
+                                    <a class="header-nav__link header-nav__sell-btn" href="{{ route('sell.create') }}">出品</a>
                                 </li>
                             @endauth
                         </ul>
@@ -85,5 +87,4 @@
         });
     </script>
 </body>
-
 </html>

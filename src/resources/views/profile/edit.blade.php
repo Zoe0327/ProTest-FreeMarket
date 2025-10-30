@@ -16,9 +16,10 @@
     </div>
     <form method="POST" action="{{ route('mypage.update') }}" class="profile__form-content" enctype="multipart/form-data">
         @csrf
+        @method('PATCH')
         <div class="profile__img-area">
             <div class="profile__img-circle">
-                <img src="" alt="プロフィール画像">
+                <img src="{{ $profile?->profile_img_url ? asset('storage/'.$profile->profile_img_url) : asset('storage/item_images/default_profile.png') }}" alt="プロフィール画像">
             </div>
             <label for="profile_img_input" class="profile__img-label">
                 画像を選択する
@@ -28,25 +29,25 @@
 
         <div class="profile__form-each">
             <p>ユーザー名</p>
-            <input type="text" name="name" value="">
+            <input type="text" name="name" value="{{ old('name', $user->name) }}">
             @error('name')<div class="error-message"></div>@enderror
         </div>
 
         <div class="profile__form-each">
             <p>郵便番号</p>
-            <input type="text" name="post_code" value="">
+            <input type="text" name="post_code" value="{{ old('post_code', $profile?->post_code ?? '') }}">
             @error('post_code')<div class="error-message"></div>@enderror
         </div>
 
         <div class="profile__form-each">
             <p>住所</p>
-            <input type="text" name="address" value="">
+            <input type="text" name="address" value="{{ old('address', $profile?->address ?? '') }}">
             @error('address')<div class="error-message"></div>@enderror
         </div>
 
         <div class="profile__form-each">
             <p>建物名</p>
-            <input type="text" name="building" value="">
+            <input type="text" name="building" value="{{ old('building', $profile?->building ?? '') }}">
             @error('building')<div class="error-message"></div>@enderror
         </div>
 
@@ -56,5 +57,19 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('profile_img_input').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // imgタグのsrcを変更
+            document.querySelector('.profile__img-circle img').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
+    </script>
 
 @endsection

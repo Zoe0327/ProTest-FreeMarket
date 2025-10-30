@@ -42,7 +42,6 @@ body {
     min-width: 0;
 }
 
-
 .item__header {
     border-bottom: 1px solid #eee;
     padding-bottom: 20px;
@@ -76,21 +75,35 @@ body {
 
 .item-actions {
     display: flex;
-    gap: 15px;
+    gap: 40px;
     margin-bottom: 20px;
 }
 
 .action-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
     font-size: 14px;
     color: #666;
+    cursor: pointer;
 }
 
 .action-item .icon {
-    margin-right: 5px;
-    font-size: 18px;
-    color: #ff4d4d;
+    font-size: 24px;
+    color: #999;
+    margin-bottom: 5px;
+    transition: color 0.3s;
+}
+
+#likes-count,
+#comments-count {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.like-button #like-icon {
+    transition: color 0.3s;
 }
 
 .item-action-wrapper {
@@ -169,10 +182,9 @@ body {
     color: #000;
 }
 
-
 /* コメントセクション */
 .comment-list {
-    display: block;
+    display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px;
@@ -257,10 +269,16 @@ body {
     background-color: #e03838;
 }
 
+.item-section .own-item-message,
+.own-item-message {
+    color: #e03838;
+    font-weight: bold;
+    font-size: 15px;
+}
+
 /* ==================================== */
 /* レスポンシブ対応 (メディアクエリ) */
 /* ==================================== */
-
 /* タブレット・中型デバイス (画面幅 900px 以下) */
 @media (max-width: 900px) {
     .show-items__container {
@@ -286,7 +304,6 @@ body {
         font-size: 24px;
     }
 }
-
 
 /* スマートフォン (画面幅 600px 以下) */
 @media (max-width: 600px) {
