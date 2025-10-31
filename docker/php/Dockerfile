@@ -12,4 +12,4 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 WORKDIR /var/www
 
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
