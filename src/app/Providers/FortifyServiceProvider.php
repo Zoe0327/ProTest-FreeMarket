@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use App\Http\Middleware\ValidateLoginRequest;
 use App\Http\Responses\RegisterResponse;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
@@ -36,6 +37,19 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
             return view('auth.login');
+        });
+        Fortify::authenticateThrough(function (Request $request) {
+            return array_filter([
+                // ログイン制限（RateLimiter）のミドルウェア
+                config('fortify.limiters.login') ? \Illuminate\Routing\Middleware\ThrottleRequests::class : null,
+
+                // ★ここに追加: カスタムバリデーションを実行
+                ValidateLoginRequest::class,
+
+                // Fortifyのデフォルト認証アクション
+                \Laravel\Fortify\Actions\AttemptToAuthenticate::class,
+                \Laravel\Fortify\Actions\PrepareAuthenticatedSession::class,
+            ]);
         });
 
         Fortify::registerView(function () {

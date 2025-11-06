@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
@@ -13,6 +15,22 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/{item_id}', [ItemController::class, 'show'])->name('items.show');
+
+// ゲストユーザーのみアクセス可能なルート（ログイン・会員登録）
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'create'])
+        ->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+});
+
+Route::post('/logout', [LoginController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+
+
 
 // 認証済みユーザーのみアクセス可能なルート
 Route::middleware(['auth'])->group(function () {

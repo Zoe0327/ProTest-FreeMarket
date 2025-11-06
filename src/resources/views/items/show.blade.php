@@ -20,10 +20,7 @@
 
                 <div class="item-actions">
                     {{-- ✅ button → aタグに変更 --}}
-                    <a href="#" 
-                       class="action-item like-button" 
-                       data-item-id="{{ $item->id }}"
-                       data-like-url="{{ route('items.like', ['item' => $item->id]) }}">
+                    <a href="#" class="action-item like-button" data-item-id="{{ $item->id }}" data-like-url="{{ route('items.like', ['item' => $item->id]) }}">
                         @php
                             $liked = Auth::check() ? Auth::user()->likes->contains('item_id', $item->id) : false;
                         @endphp
@@ -32,7 +29,7 @@
                     </a>
 
                     <span class="action-item">
-                        <span class="icon">💬</span> 
+                        <span class="icon">💬</span>
                         <span id="comments-count">{{ $item->comments->count() }}</span>
                     </span>
                 </div>
@@ -78,7 +75,7 @@
                     @forelse ($item->comments as $comment)
                         <div class="comment">
                             <div class="comment-body">
-                                <img src="{{ asset('storage/profile_images/' . (optional($comment->user->profile)->profile_img_url ?? 'default-avatar.png')) }}" alt="ユーザーアバター" class="comment-avatar">
+                                <img src="{{ asset('storage/' . (optional($comment->user->profile)->profile_img_url ?? 'default-avatar.png')) }}" alt="ユーザーアバター" class="comment-avatar">
                                 <p class="comment-user">{{ optional($comment->user)->name ?? '匿名' }}</p>
                             </div>
                             <p class="comment-text">{{ $comment->comment }}</p>
@@ -91,10 +88,14 @@
                 @if(Auth::id() !== $item->user_id)
                     <div class="comment-form">
                         <h4>商品へのコメント</h4>
-                        <form id="comment-form" action="{{ route('comments.store', $item->id) }}" method="POST">
+                        <form class="comment-form" action="{{ route('comments.store', $item->id) }}" method="POST">
                             @csrf
-                            <textarea id="comment-text" name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
-                            <div id="comment-error" style="color:red;"></div>
+                            <textarea class="comment-text" name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
+                            <div class="comment-error">
+                                @error('comment')
+                                    {{ $message }}
+                                @enderror
+                            </div>
                             <button type="submit" class="comment-submit-button">コメントを送信する</button>
                         </form>
                     </div>

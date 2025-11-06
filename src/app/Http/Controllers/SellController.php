@@ -32,7 +32,7 @@ class SellController extends Controller
             return back()->withErrors(['item_img_url' => '画像が選択されていません']);
         }
         // DB登録
-        Item::create([
+        $item = Item::create([
             'user_id' => $user->id,
             'condition_id' => $request->condition_id,
             'name' => $request->name,
@@ -42,6 +42,10 @@ class SellController extends Controller
             'item_img_url' => $item_img_url,
         ]);
 
+        if ($request->filled('category_id')) {
+            $categoryIds = explode(',', $request->category_id);
+            $item->categories()->attach($categoryIds);
+        }
         return redirect()->route('items.index')->with('success', '商品を出品しました！');
     }
 }

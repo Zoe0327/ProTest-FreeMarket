@@ -42,7 +42,7 @@
                         </span>
                     @endforeach
                 </div>
-                <input type="hidden" name="category_id" id="selected-categories" value="{{ old('category_id') ? implode(',', (array) old('category_id')) : '' }}">
+                <input type="hidden" name="category_id[]" id="selected-categories" value="">
                 @error('category_id')
                     <p class="form__error">{{ $message }}</p>
                 @enderror
@@ -108,7 +108,7 @@
 <script>
     function toggleCategory(el) {
         const hiddenInput = document.getElementById('selected-categories');
-        let selected = hiddenInput.value ? hiddenInput.value.split(',') : [];
+        let selected = hiddenInput.value ? hiddenInput.value.split(',').filter(id => id !== "") : [];
 
         const clickedId = el.dataset.id;
 

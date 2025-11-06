@@ -34,19 +34,9 @@ class LoginRequest extends FormRequest
         return [
             'email.required' => 'メールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
+            'email.email' => 'メールアドレスの形式で入力してください',
         ];
     }
 
-    /**
-     * バリデーションエラーメッセージの属性名をカスタマイズ
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            'email' => 'メールアドレス',
-            'password' => 'パスワード',
-        ];
-    }
+    
 }

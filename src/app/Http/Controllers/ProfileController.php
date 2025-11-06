@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -38,40 +39,34 @@ class ProfileController extends Controller
     }
 
     // プロフィールの更新処理
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         /** @var User $user */ //
         $user = Auth::user();
 
         // 1. バリデーション
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:20',
-            'post_code' => 'required|string|size:8', // ハイフンあり8文字
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
-            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validatedData = $request->validated();
+        $profileImageFile = $request->file('profile_img_url');
 
         // 2. Profile が存在しなければ作成（NOT NULL カラムの値を必ず渡す）
-        $profile = $user->profile;
-        if (!$profile) {
-            $profile = $user->profile()->create([
-                'post_code' => $validatedData['post_code'],
-                'address'   => $validatedData['address'],
-                'building'  => $validatedData['building'] ?? '',
-            ]);
+        $profile = $user->profile ?? new Profile();
+        if (!$profile->exists) {
+            $profile->user_id = $user->id;
+            $profile->post_code = $validatedData['post_code'] ?? '';
+            $profile->address = $validatedData['address'] ?? '';
+            $profile->building = $validatedData['building'] ?? '';
         }
 
         // 3. 画像アップロード処理
-        if ($request->hasFile('profile_img')) {
-            $path = $request->file('profile_img')->store('public/profile_images');
+        if ($profileImageFile) {
+            $path = $profileImageFile->store('public/profile_images');
             $profile->profile_img_url = str_replace('public/', '', $path);
         }
 
         // 4. その他情報を保存
         $profile->post_code = $validatedData['post_code'];
         $profile->address = $validatedData['address'];
-        $profile->building = $validatedData['building'];
+        $profile->building = $validatedData['building'] ?? null;
         $profile->save();
 
         // User 名は Users テーブルに保存

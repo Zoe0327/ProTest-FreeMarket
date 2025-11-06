@@ -24,31 +24,49 @@
             <label for="profile_img_input" class="profile__img-label">
                 画像を選択する
             </label>
-            <input type="file" id="profile_img_input" name="profile_img" accept="image/*" style="display: none;">
+            <input type="file" id="profile_img_input" name="profile_img_url" accept="image/*" style="display: none;">
         </div>
 
         <div class="profile__form-each">
             <p>ユーザー名</p>
             <input type="text" name="name" value="{{ old('name', $user->name) }}">
-            @error('name')<div class="error-message"></div>@enderror
+            <div class="error-message">
+                @error('name')
+                    {{ $message }}
+                @enderror
+            </div>
+
         </div>
 
         <div class="profile__form-each">
             <p>郵便番号</p>
             <input type="text" name="post_code" value="{{ old('post_code', $profile?->post_code ?? '') }}">
-            @error('post_code')<div class="error-message"></div>@enderror
+            <div class="error-message">
+                @error('post_code')
+                    {{ $message }}
+                @enderror
+            </div>
         </div>
 
         <div class="profile__form-each">
             <p>住所</p>
             <input type="text" name="address" value="{{ old('address', $profile?->address ?? '') }}">
-            @error('address')<div class="error-message"></div>@enderror
+
+            <div class="error-message">
+                @error('address')
+                {{ $message }}
+                @enderror
+            </div>
         </div>
 
         <div class="profile__form-each">
             <p>建物名</p>
             <input type="text" name="building" value="{{ old('building', $profile?->building ?? '') }}">
-            @error('building')<div class="error-message"></div>@enderror
+            <div class="error-message">
+                @error('building')
+                    {{ $message }}
+                @enderror
+            </div>
         </div>
 
 

@@ -30,4 +30,17 @@ class ProfileRequest extends FormRequest
             'address' => 'required|string',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'profile_img_url.mimes' => '画像ファイルはJPEGまたはPNG形式を選択してください。',
+            'name.required' => 'ユーザー名を入力してください。',
+            'name.string' => 'ユーザー名には文字列を入力してください。',
+            'name.max' => 'ユーザー名は20文字以内で入力してください。',
+            'post_code.required' => '郵便番号を入力してください。',
+            'post_code.regex' => 'ハイフンありの8文字で入力してください。',
+            'address.required' => '住所を入力してください。',
+        ];
+    }
 }

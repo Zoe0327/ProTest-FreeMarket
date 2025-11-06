@@ -4,29 +4,55 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Like;
+use App\Models\Comment;
 
 
 class ItemController extends Controller
-{ 
+{
     // 商品一覧
     public function index(Request $request)
     {
-
+        $keyword = $request->input('keyword');
         $userId = Auth::id();
-        // 自分の出品商品を除外して取得
-        $recommendedItems = Item::where('user_id', '!=', $userId)->get();
 
-        // マイリストはユーザーが「いいね」した商品だけ取得
-        $mylistItems = [];
-        if ($userId) {
-            $mylistItems = Item::whereHas('likes', function($q) use ($userId) {
-                $q->where('user_id', $userId);
-            })->get();
+        // ベースとなるクエリ: 検索キーワードを適用
+        $baseQuery = Item::query();
+        if ($keyword) {
+            // 商品名(name)を部分一致で検索
+            $baseQuery->where('name', 'like', '%' . $keyword . '%');
         }
 
-        return view('index', compact('recommendedItems', 'mylistItems'));
+        //1. おすすめ商品リスト
+
+        if ($userId) {
+            // ログインユーザー: 自分の出品商品を除外
+            $recommendedQuery = (clone $baseQuery)
+                ->where('user_id', '!=', $userId);
+        } else {
+            // ゲストユーザー: すべての商品
+            $recommendedQuery = (clone $baseQuery);
+        }
+
+        $recommendedItems = $recommendedQuery->withCount('likes')->latest()->get();
+
+
+        //2. マイリスト
+
+        $mylistItems = collect(); // 初期化
+        if ($userId) {
+            // ログインユーザーのみマイリストを取得
+            $mylistQuery = (clone $baseQuery)
+                ->whereHas('likes', function ($q) use ($userId) {
+                    $q->where('user_id', $userId);
+                });
+
+            $mylistItems = $mylistQuery->withCount('likes')->get();
+        }
+
+        // 検索の有無に関わらず、すべてのデータをビューに渡す
+        return view('index', compact('recommendedItems', 'mylistItems', 'keyword'));
     }
 
     // 商品詳細
@@ -57,7 +83,7 @@ class ItemController extends Controller
             $liked = false;
         } else {
             // 新規のいいね作成
-            $item->likes()->create(['user_id'=> $user->id]);
+            $item->likes()->create(['user_id' => $user->id]);
             $liked = true;
         }
 

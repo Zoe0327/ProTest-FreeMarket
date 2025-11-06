@@ -6,6 +6,14 @@
 
 @section('content')
 <div class="index-form">
+    @if (isset($keyword) && $keyword)
+        <h2 class='index__title'>
+            「{{ $keyword }}」の検索結果
+        </h2>
+    @endif
+
+
+
     <div class="index-form__tabs">
         <h4 class="index__tab index__tab--active" data-target="recommend">おすすめ</h4>
         <h4 class="index__tab" data-target="mylist">マイリスト</h4>
@@ -14,37 +22,57 @@
     {{-- おすすめ --}}
     <div class="index__items">
         <div id="recommend" class="tab-content active">
-            @foreach ($recommendedItems as $item)
-                <div class="index__item">
-                    <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="index__item-link">
-                        <div class="item-img_wrapper" style='position: relative'>
-                            <img src="{{ asset('storage/item_images/' . $item->item_img_url) }}" alt="{{ $item->name }}" class="index__item-img">
-                            @if($item->soldItem)
-                                <span class="sold-label">SOLD</span>
-                            @endif
-                        </div>
-                        <p class="index__item-name">{{ $item->name }}</p>
-                    </a>
-                </div>
-            @endforeach
+            @if ($recommendedItems->isEmpty())
+                <p class="index__no-result">
+                    @if (isset($keyword) && $keyword)
+                    「{{ $keyword }}」を含むおすすめ商品はありませんでした。
+                    @else
+                        おすすめの商品はありません。
+                    @endif
+                </p>
+            @else
+                @foreach ($recommendedItems as $item)
+                    <div class="index__item">
+                        <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="index__item-link">
+                            <div class="item-img_wrapper" style='position: relative'>
+                                <img src="{{ asset('storage/item_images/' . $item->item_img_url) }}" alt="{{ $item->name }}" class="index__item-img">
+                                @if($item->soldItem)
+                                    <span class="sold-label">SOLD</span>
+                                @endif
+                            </div>
+                            <p class="index__item-name">{{ $item->name }}</p>
+                        </a>
+                    </div>
+                @endforeach
+            @endif
         </div>
         {{-- マイリスト --}}
         <div id="mylist" class="tab-content">
-            @foreach ($mylistItems as $item)
-                <div class="index__item">
-                    <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="index__item-link">
-                        <div class="item-img-wrapper" style="position: relative;">
-                            <img src="{{ asset('storage/item_images/' . $item->item_img_url) }}" alt="{{ $item->name }}" class="index__item-img">
-                            @if($item->soldItem)
-                                <span class="sold-label" style="position: absolute; top: 5px; left: 5px; background: red; color: white; padding: 2px 6px; font-size: 12px; border-radius: 4px;">
-                                    SOLD
-                                </span>
-                            @endif
-                        </div>
-                    </a>
-                    <p class="index__item-name">{{ $item->name }}</p>
-                </div>
-            @endforeach
+            @if ($mylistItems->isEmpty())
+                <p class="index__no-result">
+                    @if (isset($keyword) && $keyword)
+                        「{{ $keyword }}」を含むマイリストの商品はありませんでした。
+                    @else
+                        マイリストに商品はありません。
+                    @endif
+                </p>
+            @else
+                @foreach ($mylistItems as $item)
+                    <div class="index__item">
+                        <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="index__item-link">
+                            <div class="item-img-wrapper" style="position: relative;">
+                                <img src="{{ asset('storage/item_images/' . $item->item_img_url) }}" alt="{{ $item->name }}" class="index__item-img">
+                                @if($item->soldItem)
+                                    <span class="sold-label" >
+                                        SOLD
+                                    </span>
+                                @endif
+                            </div>
+                        </a>
+                        <p class="index__item-name">{{ $item->name }}</p>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>
