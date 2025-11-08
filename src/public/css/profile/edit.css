@@ -104,11 +104,6 @@
     font-size: 20px;
 }
 
-.form__button {
-    width: 100%;
-    text-align: center;
-}
-
 .form__button-submit {
     padding: 12px 0;
     width: 100%;

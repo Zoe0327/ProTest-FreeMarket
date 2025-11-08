@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="mypage__content">
-    <form method="GET" action="{{ route('mypage.edit') }}" class="mypage__form-content" enctype="multipart/form-data">
+    <form method="GET" action="{{ route('mypage.edit') }}" enctype="multipart/form-data">
         <div class="mypage__area">
             <div class="mypage__img-circle">
                 <img src="{{ $user->profile?->profile_img_url ? asset('storage/' . $user->profile->profile_img_url) : asset('storage/item_images/default_profile.png') }}" alt="プロフィール画像">

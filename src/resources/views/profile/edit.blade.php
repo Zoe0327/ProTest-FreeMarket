@@ -14,7 +14,7 @@
     <div class="profile__form-title">
         <h1>プロフィール設定</h1>
     </div>
-    <form method="POST" action="{{ route('mypage.update') }}" class="profile__form-content" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('mypage.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <div class="profile__img-area">

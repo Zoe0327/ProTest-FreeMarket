@@ -90,7 +90,7 @@
                         <h4>商品へのコメント</h4>
                         <form class="comment-form" action="{{ route('comments.store', $item->id) }}" method="POST">
                             @csrf
-                            <textarea class="comment-text" name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
+                            <textarea class="comment" name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
                             <div class="comment-error">
                                 @error('comment')
                                     {{ $message }}

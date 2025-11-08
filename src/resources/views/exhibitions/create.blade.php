@@ -27,8 +27,6 @@
             @enderror
         </div>
 
-        <hr class="form-divider">
-
         <div class="form-section">
             <h3 class="section-title">商品の詳細</h3>
             <div class="sell__separator"></div>
@@ -42,7 +40,13 @@
                         </span>
                     @endforeach
                 </div>
-                <input type="hidden" name="category_id[]" id="selected-categories" value="">
+                @php
+                $categoryOldValue = old('category_id');
+                if (is_array($categoryOldValue)) {
+                    $categoryOldValue = implode(',', $categoryOldValue);
+                }
+                @endphp
+                <input type="hidden" name="category_id" id="selected-categories" value="{{ $categoryOldValue }}">
                 @error('category_id')
                     <p class="form__error">{{ $message }}</p>
                 @enderror

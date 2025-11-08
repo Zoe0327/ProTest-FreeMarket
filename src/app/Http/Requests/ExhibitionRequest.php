@@ -27,8 +27,7 @@ class ExhibitionRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'required|string|max:255',
             'item_img_url' => 'required|image|mimes:jpeg,png',
-            'category_id' => 'required|array',
-            'category_id.*' => 'integer|exists:categories,id',
+            'category_id' => 'required|string',
             'condition_id' => 'required|integer|exists:conditions,id',
             'price' => 'required|integer|min:0',
         ];
@@ -50,8 +49,6 @@ class ExhibitionRequest extends FormRequest
 
             'category_id.required' => 'カテゴリーを1つ以上選択してください。',
             'category_id.array' => 'カテゴリーの選択形式が不正です。',
-            'category_id.*.integer' => '選択されたカテゴリーの値が不正です。',
-            'category_id.*.exists' => '存在しないカテゴリーが選択されています。',
 
             'condition_id.required' => '商品の状態を選択してください。',
 

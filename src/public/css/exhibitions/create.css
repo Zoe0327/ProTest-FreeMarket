@@ -71,22 +71,28 @@ body {
     padding: 5px 0;
 }
 
+/* ★ 整理後のカテゴリーチップスタイル ★ */
 .category-chip {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 5px 12px;
+    /* Bladeのインラインスタイルを採用 */
+    margin: 4px;
+    border: 1px solid #FF5555;
+    /* Bladeのインラインスタイルを採用 */
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
     background-color: #fff;
     color: #FF5555;
-    border-radius: 20px;
     font-size: 14px;
-    border: none;
 }
 
-.category-chip .selected {
+/* ★ 整理後の選択状態スタイル (子孫セレクタから複合セレクタに修正) ★ */
+.category-chip.selected {
     background-color: #FF5555;
     color: #fff;
     border-color: #FF5555;
-    cursor: pointer;
-    transition: all 0.2s;
 }
 
 .sell-form-input,
@@ -236,6 +242,11 @@ body {
     margin-top: 5px;
 }
 
+/* 汎用的な非表示クラス (画像プレビューなどに使用) */
+.hidden {
+    display: none;
+}
+
 /* ==================================== */
 /* レスポンシブ対応 (メディアクエリ) */
 /* ==================================== */
@@ -292,5 +303,4 @@ body {
     .category-chip {
         font-size: 13px;
         padding: 5px 10px;
-    }
-}
+    }   }

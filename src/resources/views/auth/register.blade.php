@@ -33,7 +33,7 @@
                 <div class="form__input--text">
                     <input type="email" name="email" value="{{ old('email') }}" />
                 </div>
-                <div class="form-error">
+                <div class="form__error">
                     @error('email')
                     {{ $message}}
                     @enderror

@@ -60,7 +60,7 @@
                 @foreach ($mylistItems as $item)
                     <div class="index__item">
                         <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="index__item-link">
-                            <div class="item-img-wrapper" style="position: relative;">
+                            <div class="item-img_wrapper" style="position: relative;">
                                 <img src="{{ asset('storage/item_images/' . $item->item_img_url) }}" alt="{{ $item->name }}" class="index__item-img">
                                 @if($item->soldItem)
                                     <span class="sold-label" >
