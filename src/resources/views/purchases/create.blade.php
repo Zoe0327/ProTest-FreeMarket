@@ -39,11 +39,11 @@
                         <a href="{{ route('purchase.address.edit', $item->id) }}" class="address-edit">変更する</a>
                     </div>
                     <div class="confirmed-address">
-                        <p class="address-zip">〒{{ Auth::user()->profile->post_code }}</p>
+                        <p class="address-zip">〒{{ $deliveryAddress['post_code'] }}</p>
                         <p class="address-full">
-                            {{ Auth::user()->profile->address }}
-                            @if(Auth::user()->profile->building)
-                                {{ Auth::user()->profile->building }}
+                            {{ $deliveryAddress['address'] }}
+                            @if(!empty($deliveryAddress['building']))
+                                {{ $deliveryAddress['building'] }}
                             @endif
                         </p>
                     </div>

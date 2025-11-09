@@ -39,4 +39,4 @@ DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAM
 ・購入状態の判定は sold_items テーブルで行い、該当商品が存在する場合に「SOLD」を表示。
 ・ログイン中のユーザーが自分の出品した商品を開いた場合、購入ボタンが表示されないように設定。
 　（自分の商品を自分で購入できないため）
-・クレジット決済完了後は、商品一覧画面へ遷移し、購入完了メッセージを表示する。
+

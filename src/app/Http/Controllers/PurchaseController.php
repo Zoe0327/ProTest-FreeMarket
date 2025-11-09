@@ -15,7 +15,13 @@ class PurchaseController extends Controller
     public function create($item_id)
     {
         $item = Item::findOrFail($item_id);
-        return view('purchases.create', compact('item'));
+
+        $deliveryAddress = session('purchase_address') ?? [
+            'post_code' => Auth::user()->profile->post_code,
+            'address' => Auth::user()->profile->address,
+            'building' => Auth::user()->profile->building,
+        ];
+        return view('purchases.create', compact('item', 'deliveryAddress'));
     }
 
     // 購入処理
@@ -30,17 +36,22 @@ class PurchaseController extends Controller
         }
 
 
-        // sold_items テーブルに保存
-        $profile = $user->profile;
+        $address = session('purchase_address') ?? [
+            'post_code' => $user->profile->post_code,
+            'address' => $user->profile->address,
+            'building' => $user->profile->building,
+        ];
 
         SoldItem::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'sending_post_code' => $profile->post_code,
-            'sending_address' => $profile->address,
-            'sending_building' => $profile->building,
+            'sending_post_code' => $address['post_code'],
+            'sending_address' => $address['address'],
+            'sending_building' => $address['building'],
             'payment_method' => $request->payment_method,
         ]);
+
+        session()->forget('purchase_address');
 
         return redirect()->route('items.index')->with('success', '購入が完了しました！');
     }
@@ -64,16 +75,16 @@ class PurchaseController extends Controller
             'building' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $user = Auth::user();
-        // profile が存在しない場合は新規作成
-        $profile = $user->profile ?? new Profile(['user_id' => $user->id]);
-        $profile->post_code = $request->post_code;
-        $profile->address = $request->address;
-        $profile->building = $request->building;
-        $profile->save();
+        session([
+            'purchase_address' => [
+                'post_code' => $request->post_code,
+                'address' => $request->address,
+                'building' => $request->building,
+            ],
+        ]);
 
-        // 更新後に購入ページへ戻す
-        return redirect()->route('purchase.create', ['item_id' => $item_id])->with('success', '住所を変更しました。');
+        return redirect()->route('purchase.create', ['item_id' => $item_id])
+            ->with('success', '配送先住所を変更しました。');
     }
 
     // 購入完了ページ
