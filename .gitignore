@@ -14,3 +14,5 @@ yarn-error.log
 /.idea
 /.vscode
 /node_modules  # srcの外にある場合はここにも追加
+/storage/*
+!/storage/app/public

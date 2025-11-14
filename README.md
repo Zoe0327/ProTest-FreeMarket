@@ -60,4 +60,3 @@ stripe listen --forward-to http://localhost/stripe/webhook
  ※注意
  ・WSL2 + Docker 環境では php artisan serve は使わず、Nginx を通した localhost URL を使用
  ・本番環境では Webhook は Stripe ダッシュボードに設定した公開 URL に届くため、ここでの手順は 開発環境用テスト手順 とする
-
