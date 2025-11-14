@@ -40,3 +40,24 @@ DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAM
 ・ログイン中のユーザーが自分の出品した商品を開いた場合、購入ボタンが表示されないように設定。
 　（自分の商品を自分で購入できないため）
 
+## Stripe テスト購入（ローカルで SoldItem 確認）
+1. .env に Stripe テストキーを追加
+　（各自の Stripe アカウントで取得してください）
+STRIPE_KEY=pk_test_xxx
+STRIPE_SECRET=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+2. Stripe CLI で Webhook をローカルに転送
+stripe listen --forward-to http://localhost/stripe/webhook
+3. ブラウザで商品購入 → Stripe Checkout でテスト決済
+・テストカード番号：4242 4242 4242 4242
+・有効期限：任意未来日
+・CVC：任意
+4. Stripe CLI のターミナルでイベントが転送されることを確認
+5. Laravel DB に SoldItem が作成されていることを確認
+ php artisan tinker
+>>> \App\Models\SoldItem::all();
+6. 商品一覧ページで「SOLD」と表示されることを確認
+ ※注意
+ ・WSL2 + Docker 環境では php artisan serve は使わず、Nginx を通した localhost URL を使用
+ ・本番環境では Webhook は Stripe ダッシュボードに設定した公開 URL に届くため、ここでの手順は 開発環境用テスト手順 とする
+
