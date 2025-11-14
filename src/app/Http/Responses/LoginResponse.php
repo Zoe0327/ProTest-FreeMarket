@@ -9,8 +9,10 @@ class LoginResponse implements LoginResponseContract
 {
     public function toResponse($request)
     {
-        // ログイン後トップページに移動
-        //return redirect()->intended('/');
+        if (!$request->user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+        
         return redirect('/');
     }
 }

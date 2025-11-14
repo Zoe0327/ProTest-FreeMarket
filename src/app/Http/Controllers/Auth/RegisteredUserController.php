@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\RegisterRequest;
 
 class RegisteredUserController extends Controller
@@ -26,7 +27,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // プロフィール設定画面へ
-        return redirect('/mypage/profile')->with('success', '会員登録が完了しました。');
+        // 登録と同時にメール認証通知を送信
+        event(new Registered($user));
+
+        // メール認証画面へリダイレクト
+        return redirect()->route('verification.notice')->with('success', '会員登録が完了しました。');
     }
 }

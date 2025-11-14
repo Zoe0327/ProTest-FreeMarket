@@ -19,20 +19,20 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))){
-        $request->session()->regenerate();
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
 
-        return redirect() ->intended('/')->with ('success', 'ログインにしました。');
+            return redirect()->intended('/')->with('success', 'ログインにしました。');
         }
 
         return back()->withErrors([
             'email' => __('auth.failed'),
-            ])->onlyInput('email');
+        ])->onlyInput('email');
     }
 
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');

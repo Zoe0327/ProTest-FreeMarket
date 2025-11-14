@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="confirm-button">
-                    <button type="submit" class="btn-purchase-submit">購入する</button>
+                    <button type="submit" id="stripe-button" class="btn-purchase-submit">購入する</button>
                 </div>
             </div>
         </div>
@@ -79,36 +79,66 @@
 @endsection
 
 @section('scripts')
+<script src="https://js.stripe.com/v3/"></script>
 <script>
     /**
      * 支払い方法のセレクトボックスが変更された際に、確認エリアの表示を更新する
      */
     document.addEventListener('DOMContentLoaded', function () {
         const selectElement = document.getElementById('payment_method_id');
-        
+        const stripeButton = document.getElementById('stripe-button');
+
+        // Stripe初期化
+        const stripe = Stripe('{{ env('STRIPE_KEY') }}'); // .envの公開キーを使う
+
         // ページロード時にも一度実行して初期値を設定
-        updatePaymentMethod();
+        updatePaymentMethod();selectElement.addEventListener('change', updatePaymentMethod);
 
-        if (selectElement) {
-            selectElement.addEventListener('change', updatePaymentMethod);
-        }
-    });
+// Stripe支払いボタンクリック時
+stripeButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    const selectedMethod = selectElement.value;
 
-    function updatePaymentMethod() {
-        const selectElement = document.getElementById('payment_method_id');
-        const displayedPaymentMethod = document.getElementById('displayed_payment_method');
-        const totalPaymentMethod = document.getElementById('total_payment_method');
-        
-        if (selectElement && displayedPaymentMethod) {
-            const methodText = selectElement.options[selectElement.selectedIndex].text;
-            // 選択されたオプションのテキスト（例: コンビニ払い、カード払い）を取得して表示を更新
-            displayedPaymentMethod.textContent = methodText;
-
-            // 小計の表示にも反映
-            if (totalPaymentMethod) {
-            totalPaymentMethod.textContent = methodText;
+    if (selectedMethod === 'カード払い') {
+        // Stripeのセッションをサーバー側で作成
+        fetch("{{ route('checkout.session') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ item_id: {{ $item->id }} })
+        })
+        .then(response => response.json())
+        .then(session => {
+            // Stripeの決済ページにリダイレクト
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(result => {
+            if (result.error) {
+                alert(result.error.message);
             }
-        }
+        })
+        .catch(error => console.error("Error:", error));
+    } else {
+        // コンビニ払いの場合は通常のフォーム送信
+        document.querySelector('.purchase-form').submit();
     }
+});
+});
+
+function updatePaymentMethod() {
+const selectElement = document.getElementById('payment_method_id');
+const displayedPaymentMethod = document.getElementById('displayed_payment_method');
+const totalPaymentMethod = document.getElementById('total_payment_method');
+
+if (selectElement && displayedPaymentMethod) {
+    const methodText = selectElement.options[selectElement.selectedIndex].text;
+    displayedPaymentMethod.textContent = methodText;
+    if (totalPaymentMethod) {
+        totalPaymentMethod.textContent = methodText;
+    }
+}
+}
 </script>
 @endsection

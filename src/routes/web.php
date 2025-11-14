@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\StripeController;
 
 
 
@@ -36,7 +38,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 Route::middleware(['auth'])->group(function () {
     // マイページ・プロフィール関連
     Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
-    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.edit');
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->middleware(['auth', 'verified'])->name('mypage.edit');
     Route::patch('/mypage/profile', [ProfileController::class, 'update'])->name('mypage.update');
 
     // 出品関連
@@ -48,11 +50,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
 
-    // 確認用
-    //Route::get('/profile/address', [ProfileController::class, 'editAddress'])->name('profile.address.edit');
-    //Route::post('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.address.update');
     Route::get('/purchases/create/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
 
     Route::post('/items/{item_id}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/items/{item}/like', [ItemController::class, 'toggleLike'])->middleware('auth')->name('items.like');
 });
+
+Route::post('/checkout', [StripeController::class, 'session'])->name('checkout.session');
+Route::get('/success', [StripeController::class, 'success'])->name('checkout.success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('checkout.cancel');
+Route::post('/stripe/webhook', [StripeController::class, 'webhook']);
+
+//メール認証通知
+Route::get('/email/verify', function() {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+//メール内リンククリック時の承認処理
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();//認証完了
+    return redirect()->route('mypage.edit');
+})->middleware(['auth','signed'])->name('verification.verify');
+
+//認証メール再送信
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    //return redirect('/mypage/profile');
+    return back()->with('message', '認証メールを再送しました。');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
