@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Profile;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller

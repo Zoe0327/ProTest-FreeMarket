@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Like;
-use App\Models\Comment;
 
 
 class ItemController extends Controller

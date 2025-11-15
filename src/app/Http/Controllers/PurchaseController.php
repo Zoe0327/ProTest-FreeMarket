@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Profile;
 use App\Models\SoldItem;
