@@ -11,7 +11,7 @@
     </div>
 
     <div class="verify-email__form">
-        <form action="{{ route('verification.notice') }}" method="POST">
+        <form action="{{ route('verification.dummy') }}" method="POST">
             @csrf
             <button type="submit" class="verify-email__button-submit">
                 認証はこちらから

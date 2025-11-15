@@ -72,6 +72,12 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect()->route('mypage.edit');
 })->middleware(['auth','signed'])->name('verification.verify');
 
+
+//ダミールート
+Route::post('/email/verify/dummy', function () {
+    return back();
+})->name('verification.dummy');
+
 //認証メール再送信
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
