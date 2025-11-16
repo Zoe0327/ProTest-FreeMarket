@@ -25,7 +25,7 @@ class CategoryItemTableSeeder extends Seeder
 
             // 👇 複数カテゴリーに属する例
             ['item_id' => 4, 'category_id' => 1],  // 革靴 → ファッションも
-            ['item_id' => 7, 'category_id' => 5],  // バッグ → メンズにも
+            ['item_id' => 7, 'category_id' => 4],  // バッグ → メンズにも
         ];
 
         foreach ($relations as $relation) {

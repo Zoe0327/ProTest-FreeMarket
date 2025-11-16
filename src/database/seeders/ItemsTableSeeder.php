@@ -22,7 +22,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 15000,
                 'brand_name' => 'Rolax',
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
-                'item_img_url' => 'watch.jpg',
+                'item_img_url' => '腕時計.jpg',
                 'condition_id' => 1,
             ],
             [
@@ -36,7 +36,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => '玉ねぎ3束',
                 'price' => 300,
-                'brand_name' => 'なし',
+                'brand_name' => null,
                 'description' => '新鮮な玉ねぎ3束のセット',
                 'item_img_url' => '玉ねぎ3束.jpg',
                 'condition_id' => 3,
@@ -44,7 +44,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => '革靴',
                 'price' => 4000,
-                'brand_name' => 'null',
+                'brand_name' => null,
                 'description' => 'クラシックなデザインの革靴',
                 'item_img_url' => '革靴.jpg',
                 'condition_id' => 4,
@@ -52,7 +52,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => 'ノートPC',
                 'price' => 45000,
-                'brand_name' => 'null',
+                'brand_name' => null,
                 'description' => '高性能なノートパソコン',
                 'item_img_url' => 'ノートPC.jpg',
                 'condition_id' => 1,
@@ -60,7 +60,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => 'マイク',
                 'price' => 8000,
-                'brand_name' => 'なし',
+                'brand_name' => null,
                 'description' => '高品質のレコーディング用マイク',
                 'item_img_url' => 'マイク.jpg',
                 'condition_id' => 2,
@@ -68,7 +68,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => 'ショルダーバッグ',
                 'price' => 3500,
-                'brand_name' => 'null',
+                'brand_name' => null,
                 'description' => 'おしゃれなショルダーバッグ',
                 'item_img_url' => 'ショルダーバッグ.jpg',
                 'condition_id' => 3,
@@ -76,7 +76,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => 'タンブラー',
                 'price' => 500,
-                'brand_name' => 'なし',
+                'brand_name' => null,
                 'description' => '使いやすいタンブラー',
                 'item_img_url' => 'タンブラー.jpg',
                 'condition_id' => 4,
@@ -92,7 +92,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'name' => 'メイクセット',
                 'price' => 2500,
-                'brand_name' => 'null',
+                'brand_name' => null,
                 'description' => '便利なメイクアップセット',
                 'item_img_url' => '外出メイクアップセット.jpg',
                 'condition_id' => 2,

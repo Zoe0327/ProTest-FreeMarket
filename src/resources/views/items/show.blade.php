@@ -15,7 +15,7 @@
         <div class="show-items__content">
             <div class="item__header">
                 <h2 class="item__name">{{ $item->name }}</h2>
-                <p class="brand__name">{{ $item->brand_name }}</p>
+                <p class="brand__name">{{ $item->brand_name ?? 'なし' }}</p>
                 <p class="price">￥{{ number_format($item->price) }}<span>（税込）</span></p>
 
                 <div class="item-actions">
