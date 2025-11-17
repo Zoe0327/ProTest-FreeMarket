@@ -95,7 +95,7 @@
                     <p class="sell-form-label">販売価格</p>
                     <div class="price-input-wrapper">
                         <span class="yen-mark">￥</span>
-                        <input type="number" name="price" value="{{ old('price') }}" class="sell-form-input" min="0" max="10000" />
+                        <input type="number" name="price" value="{{ old('price') }}" class="sell-form-input" min="0" max="1000000000" />
                     </div>
                     @error('price')
                         <p class="form__error">{{ $message }}</p>

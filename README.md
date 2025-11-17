@@ -56,7 +56,7 @@ DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAM
 　MAIL_ENCRYPTION=tls
 　MAIL_FROM_ADDRESS=noreply@example.com
 　MAIL_FROM_NAME="${APP_NAME}"
- 
+
 ## Stripe テスト購入（ローカルで SoldItem 確認）
 1. .env に Stripe テストキーを追加
 　（各自の Stripe アカウントで取得してください）
