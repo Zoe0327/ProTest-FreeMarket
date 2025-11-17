@@ -48,6 +48,15 @@ DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAM
 
 ## Mailtrap（メール送信テスト用）
 ・メール認証の際はMailtrapにログインした状態で会員登録を行いメールの認証を実行する。
+・.envのMAILの修正
+　MAIL_HOST=sandbox.smtp.mailtrap.io
+　MAIL_PORT=2525
+　MAIL_USERNAME=xxx（自身のアカウントを参照）
+　MAIL_PASSWORD=xxx（自身のアカウントを参照）
+　MAIL_ENCRYPTION=tls
+　MAIL_FROM_ADDRESS=noreply@example.com
+　MAIL_FROM_NAME="${APP_NAME}"
+ 
 ## Stripe テスト購入（ローカルで SoldItem 確認）
 1. .env に Stripe テストキーを追加
 　（各自の Stripe アカウントで取得してください）
