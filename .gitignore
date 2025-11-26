@@ -15,4 +15,5 @@ yarn-error.log
 /.vscode
 /node_modules  # srcの外にある場合はここにも追加
 /storage/*
-!/storage/app/public
+!/storage/app/public.env.testing
+.env.testing
