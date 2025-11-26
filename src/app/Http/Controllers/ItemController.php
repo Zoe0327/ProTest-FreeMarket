@@ -90,4 +90,40 @@ class ItemController extends Controller
             'likes_count' => $item->likes()->count(),
         ]);
     }
+
+    //テストのAPI用メソッド
+    public function apiIndex(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $userId = Auth::id();
+
+        $query = Item::with('user', 'condition', 'categories', 'soldItem');
+
+        if ($keyword) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+
+        if ($userId) {
+            $query->where('user_id', '!=', $userId); // 自分の商品を除外
+        }
+
+        $items = $query->latest()->get()->map(function ($item) {
+            $data = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'price' => $item->price,
+                'brand_name' => $item->brand_name,
+                'description' => $item->description,
+                'item_img_url' => $item->item_img_url,
+            ];
+
+            if ($item->soldItem) {
+                $data['sold'] = true; // 購入済みのみ sold キーを追加
+            }
+
+            return $data;
+        });
+
+        return response()->json(['data' => $items]);
+    }
 }

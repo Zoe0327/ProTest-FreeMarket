@@ -21,7 +21,7 @@
 
                 {{-- 検索フォーム（全ページ共通） --}}
                 <form action="{{ route('items.index') }}" method="get" class="header__search">
-                    <input type="text" name="keyword" placeholder="なにをお探しですか？">
+                    <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
                 </form>
                 {{-- ハンバーガーメニューボタン --}}
                 <button class="hamburger" id="js-hamburger">
