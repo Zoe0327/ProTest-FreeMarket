@@ -28,6 +28,7 @@ class ProfileRequest extends FormRequest
             'name' => 'required|string|max:20',
             'post_code' => 'required|regex:/^\d{3}-\d{4}$/',
             'address' => 'required|string',
+            'building' => ['nullable', 'string', 'max:255'],
         ];
     }
 
