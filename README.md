@@ -82,5 +82,3 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
  ## PHPunitテスト
 1. テスト用データベースを作成 docker-compose exec mysql mysql -u root -pにログイン後CREATE DATABASE demo_test;を実行
 2. PHPUnitでテストを実行 docker-compose exec php php artisan test
-
-
