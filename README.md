@@ -17,7 +17,7 @@ DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAM
 5. アプリケーションキーの作成 php artisan key:generate
 6. マイグレーションの実行 php artisan migrate
 7. シーディングの実行 php artisan db:seed
-8. ストレージングの作成php artisan storage:link
+8. ストレージングの作成 php artisan storage:link
 
 ## 使用技術（実行環境）
 ・ Laravel 8.83
@@ -78,4 +78,9 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
  ※注意
  ・WSL2 + Docker 環境では php artisan serve は使わず、Nginx を通した localhost URL を使用
  ・本番環境では Webhook は Stripe ダッシュボードに設定した公開 URL に届くため、ここでの手順は 開発環境用テスト手順 とする
+
+ ## PHPunitテスト
+1. テスト用データベースを作成 docker-compose exec mysql mysql -u root -pにログイン後CREATE DATABASE demo_test;を実行
+2. PHPUnitでテストを実行 docker-compose exec php php artisan test
+
 
