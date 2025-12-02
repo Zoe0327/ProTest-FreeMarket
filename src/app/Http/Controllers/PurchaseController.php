@@ -14,12 +14,21 @@ class PurchaseController extends Controller
     public function create($item_id)
     {
         $item = Item::findOrFail($item_id);
+        $user = Auth::user();
 
+        // 出品者自身が購入画面にアクセスしようとした場合のチェック
+        if ($item->user_id === $user->id) {
+            return redirect()->route('items.show', ['item_id' => $item_id])
+                ->withErrors(['purchase' => '自分の出品商品は購入できません。']);
+        }
+
+        // 配送先住所の取得
         $deliveryAddress = session('purchase_address') ?? [
-            'post_code' => Auth::user()->profile->post_code,
-            'address' => Auth::user()->profile->address,
-            'building' => Auth::user()->profile->building,
+            'post_code' => $user->profile->post_code,
+            'address' => $user->profile->address,
+            'building' => $user->profile->building,
         ];
+
         return view('purchases.create', compact('item', 'deliveryAddress'));
     }
 
@@ -29,18 +38,26 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
+        // 出品者自身が購入しようとした場合のチェック
+        if ($item->user_id === $user->id) {
+            return redirect()->route('items.show', ['item_id' => $item_id])
+                ->withErrors(['purchase' => '自分の出品商品は購入できません。']);
+        }
+
+        // 売り切れの商品を購入しようとした場合のチェック
         if (SoldItem::where('item_id', $item_id)->exists()) {
-            return redirect()->route('item.show', ['item_id' => $item_id])
+            return redirect()->route('items.show', ['item_id' => $item_id])
                 ->withErrors(['sold' => 'この商品はすでに購入されています。']);
         }
 
-
+        // 住所情報の取得
         $address = session('purchase_address') ?? [
             'post_code' => $user->profile->post_code,
             'address' => $user->profile->address,
             'building' => $user->profile->building,
         ];
 
+        // 購入処理
         SoldItem::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
@@ -50,6 +67,7 @@ class PurchaseController extends Controller
             'payment_method' => $request->payment_method,
         ]);
 
+        // 購入後、セッションをクリア
         session()->forget('purchase_address');
 
         return redirect()->route('items.index')->with('success', '購入が完了しました！');
