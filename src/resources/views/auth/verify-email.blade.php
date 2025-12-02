@@ -11,12 +11,9 @@
     </div>
 
     <div class="verify-email__form">
-        <form action="{{ route('verification.dummy') }}" method="POST">
-            @csrf
-            <button type="submit" class="verify-email__button-submit">
-                認証はこちらから
-            </button>
-        </form>
+        <a href="https://mailtrap.io/home" target="_blank" class="verify-email__button-submit">
+            認証はこちらから
+        </a>
     </div>
 
     <form class="verify-email__form" action="{{ route('verification.send') }}" method="POST">

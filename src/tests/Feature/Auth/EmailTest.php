@@ -45,6 +45,22 @@ class EmailTest extends TestCase
             ->assertSee('登録していただいたメールアドレスに認証メールを送付しました。');
     }
 
+ 
+    /** @test */
+    public function verify_email_button_redirects_to_mailtrap()
+    {
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create([
+            'email_verified_at' => null,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('verification.notice'));
+
+        $response->assertSee('<a href="https://mailtrap.io/home"', false);
+    }
+
+
     /** @test */
     public function user_can_verify_email()
     {
