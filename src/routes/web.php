@@ -46,11 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
 
     // 購入関連
-    Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
-    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
-    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchases.store');
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchases.address.edit');
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchases.address.update');
 
-    Route::get('/purchases/create/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
+    Route::get('/purchases/create/{item_id}', [PurchaseController::class, 'create'])->name('purchases.create');
 
     Route::post('/items/{item_id}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/items/{item}/like', [ItemController::class, 'toggleLike'])->middleware('auth')->name('items.like');
@@ -62,15 +62,15 @@ Route::get('/cancel', [StripeController::class, 'cancel'])->name('checkout.cance
 Route::post('/stripe/webhook', [StripeController::class, 'webhook']);
 
 //メール認証通知
-Route::get('/email/verify', function() {
+Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 //メール内リンククリック時の承認処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();//認証完了
+    $request->fulfill(); //認証完了
     return redirect()->route('mypage.edit');
-})->middleware(['auth','signed'])->name('verification.verify');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 
 //ダミールート

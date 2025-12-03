@@ -40,7 +40,7 @@
                     @elseif(Auth::check() && Auth::id() === $item->user_id)
                         <p class="own-item-message">※自分が出品した商品です</p>
                     @else
-                        <a href="{{ route('purchase.create', ['item_id' => $item->id]) }}" class="buy-button">購入手続きへ</a>
+                        <a href="{{ route('purchases.create', ['item_id' => $item->id]) }}" class="buy-button">購入手続きへ</a>
                     @endif
                 </div>
             </div>

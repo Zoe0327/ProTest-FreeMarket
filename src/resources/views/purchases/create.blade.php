@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="purchases__form">
-    <form method="POST" action="{{ route('purchase.store', ['item_id' => $item->id]) }}" class="purchase-form">
+    <form method="POST" action="{{ route('purchases.store', ['item_id' => $item->id]) }}" class="purchase-form">
         @csrf
         <div class="purchase-content-wrapper">
             <div class="purchase__item">
@@ -36,7 +36,7 @@
                     <div class="address__header">
                         <p class="delivery-address">配送先</p>
 
-                        <a href="{{ route('purchase.address.edit', $item->id) }}" class="address-edit">変更する</a>
+                        <a href="{{ route('purchases.address.edit', $item->id) }}" class="address-edit">変更する</a>
                     </div>
                     <div class="confirmed-address">
                         <p class="address-zip">〒{{ $deliveryAddress['post_code'] }}</p>

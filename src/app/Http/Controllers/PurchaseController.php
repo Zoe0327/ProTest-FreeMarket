@@ -10,101 +10,118 @@ use App\Models\SoldItem;
 
 class PurchaseController extends Controller
 {
-    // 購入画面表示
+    /**
+     * セッションまたはプロフィールから配送先住所を取得
+     */
+    private function getDeliveryAddress($user)
+    {
+        return session('purchase_address') ?? [
+            'post_code' => $user->profile->post_code ?? '',
+            'address'   => $user->profile->address ?? '',
+            'building'  => $user->profile->building ?? '',
+        ];
+    }
+
+    /**
+     * 購入画面表示
+     */
     public function create($item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        // 出品者自身が購入画面にアクセスしようとした場合のチェック
+        // 出品者自身が購入画面にアクセスしようとした場合
         if ($item->user_id === $user->id) {
             return redirect()->route('items.show', ['item_id' => $item_id])
                 ->withErrors(['purchase' => '自分の出品商品は購入できません。']);
         }
 
-        // 配送先住所の取得
-        $deliveryAddress = session('purchase_address') ?? [
-            'post_code' => $user->profile->post_code,
-            'address' => $user->profile->address,
-            'building' => $user->profile->building,
-        ];
+        // 配送先住所（セッション優先）
+        $deliveryAddress = $this->getDeliveryAddress($user);
 
         return view('purchases.create', compact('item', 'deliveryAddress'));
     }
 
-    // 購入処理
+    /**
+     * 購入処理
+     */
     public function store(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        // 出品者自身が購入しようとした場合のチェック
+        // 出品者購入チェック
         if ($item->user_id === $user->id) {
             return redirect()->route('items.show', ['item_id' => $item_id])
                 ->withErrors(['purchase' => '自分の出品商品は購入できません。']);
         }
 
-        // 売り切れの商品を購入しようとした場合のチェック
+        // 売り切れチェック
         if (SoldItem::where('item_id', $item_id)->exists()) {
             return redirect()->route('items.show', ['item_id' => $item_id])
                 ->withErrors(['sold' => 'この商品はすでに購入されています。']);
         }
 
-        // 住所情報の取得
-        $address = session('purchase_address') ?? [
-            'post_code' => $user->profile->post_code,
-            'address' => $user->profile->address,
-            'building' => $user->profile->building,
-        ];
+        // 住所取得
+        $address = $this->getDeliveryAddress($user);
 
         // 購入処理
         SoldItem::create([
-            'user_id' => $user->id,
-            'item_id' => $item->id,
+            'user_id'           => $user->id,
+            'item_id'           => $item->id,
             'sending_post_code' => $address['post_code'],
-            'sending_address' => $address['address'],
-            'sending_building' => $address['building'],
-            'payment_method' => $request->payment_method,
+            'sending_address'   => $address['address'],
+            'sending_building'  => $address['building'],
+            'payment_method'    => $request->payment_method,
         ]);
 
-        // 購入後、セッションをクリア
+        // セッションの配送先をクリア
         session()->forget('purchase_address');
 
         return redirect()->route('items.index')->with('success', '購入が完了しました！');
     }
 
-    //住所変更フォームを表示
+    /**
+     * 住所変更フォームを表示
+     */
     public function editAddress($item_id)
     {
         $user = Auth::user();
-        $profile = $user->profile;
         $item = Item::findOrFail($item_id);
+
+        // 既存住所（プロフィール）をフォームに渡す
+        $profile = $user->profile;
 
         return view('purchases.address', compact('profile', 'item'));
     }
 
-    //住所変更を更新して購入ページに戻る
+    /**
+     * 住所変更を更新して購入ページに戻る
+     */
     public function updateAddress(Request $request, $item_id)
     {
         $request->validate([
             'post_code' => ['required', 'string', 'max:8'],
-            'address' => ['required', 'string', 'max:255'],
-            'building' => ['nullable', 'string', 'max:255'],
+            'address'   => ['required', 'string', 'max:255'],
+            'building'  => ['nullable', 'string', 'max:255'],
         ]);
 
+        // セッションに住所を保存
         session([
             'purchase_address' => [
                 'post_code' => $request->post_code,
-                'address' => $request->address,
-                'building' => $request->building,
+                'address'   => $request->address,
+                'building'  => $request->building,
             ],
         ]);
 
-        return redirect()->route('purchase.create', ['item_id' => $item_id])
+        return redirect()->route('purchases.create', ['item_id' => $item_id])
             ->with('success', '配送先住所を変更しました。');
     }
 
-    // 購入完了ページ
+    /**
+     * 購入完了ページ
+     */
     public function thanks()
     {
         return view('purchases.thanks');
