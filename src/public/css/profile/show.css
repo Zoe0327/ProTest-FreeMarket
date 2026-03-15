@@ -11,10 +11,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
+    padding: 20px 100px;
     margin-bottom: 50px;
     flex-wrap: wrap;
-    border-bottom: 1px solid #eee;
 }
 
 .mypage__img-circle {
@@ -24,7 +23,7 @@
     overflow: hidden;
     flex-shrink: 0;
     margin-right: 40px;
-    background-color: #ebe6e6;
+    background-color: #fff;
 }
 
 .mypage__img-circle img {

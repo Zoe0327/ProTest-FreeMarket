@@ -41,7 +41,7 @@ class ItemPurchaseTest extends TestCase
 
         // カテゴリ作成
         $category = Category::create([
-            'category_name' => 'テストカテゴリ',
+            'category' => 'テストカテゴリ',
         ]);
 
         // カテゴリアイテム関連付け
@@ -54,7 +54,7 @@ class ItemPurchaseTest extends TestCase
         $soldItem = SoldItem::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'sending_post_code' => '123-4567',
+            'sending_postcode' => '123-4567',
             'sending_address' => '東京都渋谷区1-1-1',
             'sending_building' => 'テストビル',
             'payment_method' => 'クレジットカード',
@@ -86,7 +86,7 @@ class ItemPurchaseTest extends TestCase
             'item_img_url' => 'test2.jpg',
         ]);
 
-        $category = Category::create(['category_name' => 'テストカテゴリ2']);
+        $category = Category::create(['category' => 'テストカテゴリ2']);
         $categoryItem = new CategoryItem();
         $categoryItem->item_id = $item->id;
         $categoryItem->category_id = $category->id;
@@ -96,7 +96,7 @@ class ItemPurchaseTest extends TestCase
         SoldItem::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'sending_post_code' => '234-5678',
+            'sending_postcode' => '234-5678',
             'sending_address' => '東京都渋谷区2-2-2',
             'sending_building' => 'テストビル2',
             'payment_method' => '銀行振込',
@@ -126,7 +126,7 @@ class ItemPurchaseTest extends TestCase
             'item_img_url' => 'test3.jpg',
         ]);
 
-        $category = Category::create(['category_name' => 'テストカテゴリ3']);
+        $category = Category::create(['category' => 'テストカテゴリ3']);
         $categoryItem = new CategoryItem();
         $categoryItem->item_id = $item->id;
         $categoryItem->category_id = $category->id;
@@ -135,7 +135,7 @@ class ItemPurchaseTest extends TestCase
         SoldItem::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'sending_post_code' => '345-6789',
+            'sending_postcode' => '345-6789',
             'sending_address' => '東京都渋谷区3-3-3',
             'sending_building' => null,
             'payment_method' => '現金',

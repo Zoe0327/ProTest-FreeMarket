@@ -27,7 +27,7 @@ class ItemPurchaseAddressTest extends TestCase
 
         // カテゴリデータ作成
         $this->category = Category::create([
-            'category_name' => 'テストカテゴリ',
+            'category' => 'テストカテゴリ',
         ]);
     }
 
@@ -57,7 +57,7 @@ class ItemPurchaseAddressTest extends TestCase
         $this->actingAs($buyer)
             ->withSession([
                 'purchase_address' => [
-                    'post_code' => '123-4567',
+                    'postcode' => '123-4567',
                     'address' => '東京都渋谷区テスト町1-1-1',
                     'building' => 'テストビル101',
                 ],
@@ -65,7 +65,7 @@ class ItemPurchaseAddressTest extends TestCase
 
         // 住所変更画面にPOST
         $response = $this->post(route('purchases.address.update', ['item_id' => $item->id]), [
-            'post_code' => '123-4567',
+            'postcode' => '123-4567',
             'address'   => '東京都渋谷区テスト町1-1-1',
             'building'  => 'テストビル101',
         ]);
@@ -109,7 +109,7 @@ class ItemPurchaseAddressTest extends TestCase
         $this->actingAs($buyer)
             ->withSession([
                 'purchase_address' => [
-                    'post_code' => '123-4567',
+                    'postcode' => '123-4567',
                     'address' => '東京都渋谷区テスト町1-1-1',
                     'building' => 'テストビル101',
                 ],
@@ -127,7 +127,7 @@ class ItemPurchaseAddressTest extends TestCase
         $this->assertDatabaseHas('sold_items', [
             'user_id'           => $buyer->id,
             'item_id'           => $item->id,
-            'sending_post_code' => '123-4567',
+            'sending_postcode' => '123-4567',
             'sending_address'   => '東京都渋谷区テスト町1-1-1',
             'sending_building'  => 'テストビル101',
         ]);

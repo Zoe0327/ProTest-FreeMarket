@@ -14,12 +14,11 @@
 
         <div class="show-items__content">
             <div class="item__header">
-                <h2 class="item__name">{{ $item->name }}</h2>
+                <h1 class="item__name">{{ $item->name }}</h1>
                 <p class="brand__name">{{ $item->brand_name ?? 'なし' }}</p>
                 <p class="price">￥{{ number_format($item->price) }}<span>（税込）</span></p>
 
                 <div class="item-actions">
-                    {{-- ✅ button → aタグに変更 --}}
                     <a href="#" class="action-item like-button" data-item-id="{{ $item->id }}" data-like-url="{{ route('items.like', ['item' => $item->id]) }}">
                         @php
                             $liked = Auth::check() ? Auth::user()->likes->contains('item_id', $item->id) : false;
@@ -45,20 +44,18 @@
                 </div>
             </div>
 
-            <!-- 商品説明 -->
             <div class="item-section item-description">
-                <h3>商品説明</h3>
-                <p>{{ $item->description }}</p>
+                <h2 class="section-title">商品説明</h2>
+                <p class="item-description__text">{{ $item->description }}</p>
             </div>
 
-            <!-- 商品の情報 -->
             <div class="item-section item-details">
-                <h3>商品の情報</h3>
+                <h2 class="section-title">商品の情報</h2>
                 <div class="info-group">
                     <p class="info-label">カテゴリー</p>
                     <div class="info-tags">
                         @foreach ($item->categories as $category)
-                        <span class="tag">{{ $category->category_name }}</span>
+                        <span class="tag">{{ $category->category }}</span>
                         @endforeach
                     </div>
                 </div>
@@ -68,9 +65,8 @@
                 </div>
             </div>
 
-            <!-- コメントセクション -->
             <div class="item-section comments-section">
-                <h3>コメント({{ $item->comments->count() }})</h3>
+                <h2 class="section-title">コメント({{ $item->comments->count() }})</h2>
                 <div class="comment-list">
                     @forelse ($item->comments as $comment)
                         <div class="comment">
@@ -81,16 +77,16 @@
                             <p class="comment-text">{{ $comment->comment }}</p>
                         </div>
                     @empty
-                        <p>コメントはまだありません。</p>
+                        <p class="empty-comment">コメントはまだありません。</p>
                     @endforelse
                 </div>
 
                 @if(Auth::id() !== $item->user_id)
-                    <div class="comment-form">
-                        <h4>商品へのコメント</h4>
+                    <div class="comment-form-wrapper">
+                        <h2 class="section-title">商品へのコメント</h2>
                         <form class="comment-form" action="{{ route('comments.store', $item->id) }}" method="POST">
                             @csrf
-                            <textarea class="comment" name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
+                            <textarea name="comment" class="comment-textarea" placeholder="コメントを入力してください"></textarea>
                             <div class="comment-error">
                                 @error('comment')
                                     {{ $message }}

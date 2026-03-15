@@ -7,9 +7,9 @@
 @section('content')
 <div class="index-form">
     @if (isset($keyword) && $keyword)
-        <h2 class='index__title'>
+        <h1 class='index__title'>
             「{{ $keyword }}」の検索結果
-        </h2>
+        </h1>
     @endif
     @if (session('success'))
     <div class="alert alert-success">
@@ -20,8 +20,8 @@
 
 
     <div class="index-form__tabs">
-        <h4 class="index__tab index__tab--active" data-target="recommend">おすすめ</h4>
-        <h4 class="index__tab" data-target="mylist">マイリスト</h4>
+        <h2 class="index__tab index__tab--active" data-target="recommend">おすすめ</h2>
+        <h2 class="index__tab" data-target="mylist">マイリスト</h2>
     </div>
 
     {{-- おすすめ --}}

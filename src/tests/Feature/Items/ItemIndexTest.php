@@ -68,7 +68,7 @@ class ItemIndexTest extends TestCase
         SoldItem::create([
             'item_id' => $item3->id,
             'user_id' => $user1->id,
-            'sending_post_code' => '123-4567',
+            'sending_postcode' => '123-4567',
             'sending_prefecture' => '東京都',
             'sending_city' => '新宿区',
             'sending_address' => '1-1-1',

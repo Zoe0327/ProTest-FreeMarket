@@ -7,7 +7,12 @@
 .register-form__heading {
     margin-bottom: 30px;
     text-align: center;
-    font-size: 20px;
+}
+
+.register-form__title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
 }
 
 .form {
@@ -85,10 +90,6 @@
 
     .form {
         width: 65%;
-    }
-
-    .register-form__heading h2 {
-        font-size: 24px;
     }
 }
 

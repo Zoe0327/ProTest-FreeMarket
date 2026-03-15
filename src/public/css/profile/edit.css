@@ -15,9 +15,9 @@
 .alert-success {
     text-align: center;
     padding: 10px;
-    background-color: #d4edda;
+    background-color: #ffffff;
     color: #155724;
-    border: 1px solid #c3e6cb;
+    border: 1px solid #ffffff;
     border-radius: 4px;
     margin: 20px auto;
     max-width: 500px;
@@ -60,6 +60,10 @@
     transition: background-color 0.2s;
 }
 
+.hidden-input {
+    display: none;
+}
+
 .profile__img-label:hover {
     background-color: #fff0f0;
 }
@@ -70,8 +74,9 @@
     font-weight: bold;
 }
 
-.profile__form-each p {
-    margin-bottom: 0;
+.profile__form-each label {
+    display: block;
+    margin-bottom: 8px;
 }
 
 .profile__form-each input {

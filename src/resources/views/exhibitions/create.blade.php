@@ -7,12 +7,12 @@
 @section('content')
 <div class="items__sell-form">
     <div class="sell-form__header">
-        <h2>商品の出品</h2>
+        <h1>商品の出品</h1>
     </div>
     <form method="POST" action="{{ route('sell.store') }}" class="sell-form" enctype="multipart/form-data">
         @csrf
         <div class="form-section">
-            <h3 class="section__img-title">商品画像</h3>
+            <h2 class="section__img-title">商品画像</h2>
             <div class="image-upload-wrapper">
                 <div class="image-upload-area">
                     <img id="image-preview" class="item-preview-img hidden" alt="商品画像プレビュー">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-section">
-            <h3 class="section-title">商品の詳細</h3>
+            <h2 class="section-title">商品の詳細</h2>
             <div class="sell__separator"></div>
 
             <div class="sell-form-group">
@@ -36,7 +36,7 @@
                 <div class="category-chips-wrapper">
                     @foreach ($categories as $category)
                         <span class="category-chip" data-id="{{ $category->id }}" onclick="toggleCategory(this)">
-                            {{ $category->category_name }}
+                            {{ $category->category }}
                         </span>
                     @endforeach
                 </div>
@@ -57,7 +57,7 @@
                     <select name="condition_id" class="sell-form-select">
                         <option value="">選択してください</option>
                         @foreach ($conditions as $condition)
-                        <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
+                        <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>{{ $condition->condition }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-section">
-                <h3 class="section-title">商品名と説明</h3>
+                <h2 class="section-title">商品名と説明</h2>
                 <div class="sell__separator"></div>
 
                 <div class="sell-form-group">

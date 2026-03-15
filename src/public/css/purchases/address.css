@@ -29,8 +29,9 @@
     font-weight: bold;
 }
 
-.profile__address-each p {
-    margin-bottom: 0;
+.profile__address-each label {
+    display: block;
+    margin-bottom: 8px;
 }
 
 .profile__address-each input {
@@ -53,11 +54,6 @@
     margin-top: 50px;
     margin-bottom: 50px;
     font-size: 20px;
-}
-
-.address__button {
-    width: 100%;
-    text-align: center;
 }
 
 .address__button-submit {

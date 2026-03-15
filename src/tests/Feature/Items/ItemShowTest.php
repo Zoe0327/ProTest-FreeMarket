@@ -24,7 +24,7 @@ class ItemShowTest extends TestCase
         $condition = Condition::create(['condition' => '新品']);
 
         // カテゴリ作成
-        $category = Category::create(['category_name' => 'ファッション']);
+        $category = Category::create(['category' => 'ファッション']);
 
         // 商品作成
         $item = Item::create([
@@ -77,8 +77,8 @@ class ItemShowTest extends TestCase
         $condition = Condition::create(['condition' => '新品']);
 
         // 複数カテゴリ作成
-        $category1 = Category::create(['category_name' => 'ファッション']);
-        $category2 = Category::create(['category_name' => 'メンズ']);
+        $category1 = Category::create(['category' => 'ファッション']);
+        $category2 = Category::create(['category' => 'メンズ']);
 
         // 商品作成
         $item = Item::create([

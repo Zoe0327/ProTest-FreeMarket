@@ -26,7 +26,7 @@ class UserUpdateTest extends TestCase
         Profile::create([
             'user_id' => $user->id,
             'profile_img_url' => 'test_profile.jpg',
-            'post_code' => '1234567',
+            'postcode' => '1234567',
             'address' => '東京都テスト',
             'building' => 'テストビル',
         ]);

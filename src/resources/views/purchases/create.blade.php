@@ -13,7 +13,7 @@
                 <div class="purchase-item__img">
                     <img src="{{ asset('storage/item_images/' .$item->item_img_url) ?? 'https://placehold.co/120x120/eee/333?text=商品画像' }}" alt="商品画像" class="item-summary__image">
                     <div class="purchase-item__detail">
-                        <h2 class="purchase-item__name">{{ $item->name ?? '商品名' }}</h2>
+                        <h1 class="purchase-item__name">{{ $item->name ?? '商品名' }}</h1>
                         <p class="purchase-price">￥{{ number_format($item->price) }}</p>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         <a href="{{ route('purchases.address.edit', $item->id) }}" class="address-edit">変更する</a>
                     </div>
                     <div class="confirmed-address">
-                        <p class="address-zip">〒{{ $deliveryAddress['post_code'] }}</p>
+                        <p class="address-zip">〒{{ $deliveryAddress['postcode'] }}</p>
                         <p class="address-full">
                             {{ $deliveryAddress['address'] }}
                             @if(!empty($deliveryAddress['building']))

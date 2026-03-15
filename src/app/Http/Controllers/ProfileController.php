@@ -49,7 +49,7 @@ class ProfileController extends Controller
         $profile = $user->profile ?? new Profile();
         if (!$profile->exists) {
             $profile->user_id = $user->id;
-            $profile->post_code = $validatedData['post_code'] ?? '';
+            $profile->postcode = $validatedData['postcode'] ?? '';
             $profile->address = $validatedData['address'] ?? '';
             $profile->building = $validatedData['building'] ?? '';
         }
@@ -61,7 +61,7 @@ class ProfileController extends Controller
         }
 
         // 4. その他情報を保存
-        $profile->post_code = $validatedData['post_code'];
+        $profile->postcode = $validatedData['postcode'];
         $profile->address = $validatedData['address'];
         $profile->building = $validatedData['building'] ?? null;
         $profile->save();
@@ -85,7 +85,7 @@ class ProfileController extends Controller
     {
         // バリデーション
         $request->validate([
-            'post_code' => ['required', 'regex:/^\d{3}-\d{4}$/'], // 例：123-4567形式
+            'postcode' => ['required', 'regex:/^\d{3}-\d{4}$/'], // 例：123-4567形式
             'address' => ['required', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
         ]);
@@ -96,7 +96,7 @@ class ProfileController extends Controller
         // プロフィールを取得 or 新規作成
         $profile = $user->profile ?? new \App\Models\Profile();
         $profile->user_id = $user->id;
-        $profile->post_code = $request->post_code;
+        $profile->postcode = $request->postcode;
         $profile->address = $request->address;
         $profile->building = $request->building;
         $profile->save();

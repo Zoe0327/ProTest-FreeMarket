@@ -24,11 +24,11 @@
             <label for="profile_img_input" class="profile__img-label">
                 画像を選択する
             </label>
-            <input type="file" id="profile_img_input" name="profile_img_url" accept="image/*" style="display: none;">
+            <input type="file" id="profile_img_input" name="profile_img_url" accept="image/*" class="hidden-input">
         </div>
 
         <div class="profile__form-each">
-            <p>ユーザー名</p>
+            <label for="name">ユーザー名</label>
             <input type="text" name="name" value="{{ old('name', $user->name) }}">
             <div class="error-message">
                 @error('name')
@@ -39,17 +39,17 @@
         </div>
 
         <div class="profile__form-each">
-            <p>郵便番号</p>
-            <input type="text" name="post_code" value="{{ old('post_code', $profile?->post_code ?? '') }}">
+            <label for="postcode">郵便番号</label>
+            <input type="text" name="postcode" value="{{ old('postcode', $profile?->postcode ?? '') }}">
             <div class="error-message">
-                @error('post_code')
+                @error('postcode')
                     {{ $message }}
                 @enderror
             </div>
         </div>
 
         <div class="profile__form-each">
-            <p>住所</p>
+            <label for="address">住所</label>
             <input type="text" name="address" value="{{ old('address', $profile?->address ?? '') }}">
 
             <div class="error-message">
@@ -60,7 +60,7 @@
         </div>
 
         <div class="profile__form-each">
-            <p>建物名</p>
+            <label for="building">建物名</label>
             <input type="text" name="building" value="{{ old('building', $profile?->building ?? '') }}">
             <div class="error-message">
                 @error('building')

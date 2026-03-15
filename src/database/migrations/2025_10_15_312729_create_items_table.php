@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('condition_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->decimal('price', 10, 2); // 価格（10桁の数字、2桁は小数）
+            $table->decimal('price', 8, 0); // 価格（8桁の数字、2桁は小数）
             $table->string('brand_name')->nullable();
             $table->text('description');
             $table->string('item_img_url');

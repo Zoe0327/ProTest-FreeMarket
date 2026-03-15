@@ -99,7 +99,7 @@ class UserLikeListTest extends TestCase
         SoldItem::create([
             'item_id' => $item->id,
             'user_id' => $user->id,
-            'sending_post_code' => '123-4567',
+            'sending_postcode' => '123-4567',
             'sending_address' => '東京都千代田区1-1-1',
             'sending_name' => 'テスト 太郎',
             'payment_method' => 'クレジットカード',

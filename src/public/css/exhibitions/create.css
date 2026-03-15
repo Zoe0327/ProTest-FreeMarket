@@ -1,5 +1,5 @@
 body {
-    background-color: #f4f4f4;
+    background-color: #fff;
     font-family: 'Inter', sans-serif;
     color: #333;
 }
@@ -18,7 +18,7 @@ body {
     margin-bottom: 30px;
 }
 
-.sell-form__header h2 {
+.sell-form__header h1 {
     font-size: 26px;
     font-weight: bold;
     color: #333;
@@ -141,12 +141,6 @@ body {
     padding-right: 35px;
 }
 
-
-.form-price .sell-form-label {
-    margin-bottom: 0;
-    white-space: nowrap;
-}
-
 .price-input-wrapper {
     position: relative;
     flex-grow: 1;
@@ -259,7 +253,7 @@ body {
         padding: 20px 25px;
     }
 
-    .sell-form__header h2 {
+    .sell-form__header h1 {
         font-size: 24px;
     }
 
@@ -292,7 +286,7 @@ body {
         box-shadow: none;
     }
 
-    .sell-form__header h2 {
+    .sell-form__header h1 {
         font-size: 22px;
     }
 

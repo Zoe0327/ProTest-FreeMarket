@@ -17,12 +17,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.purchase-item__summary {
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-}
-
 .purchase-item__img {
     display: flex;
     align-items: center;

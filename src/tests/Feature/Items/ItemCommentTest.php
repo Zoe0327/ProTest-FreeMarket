@@ -25,7 +25,7 @@ class ItemCommentTest extends TestCase
         ]);
 
         $condition = Condition::create(['condition' => '新品']);
-        $category = Category::create(['category_name' => '雑貨']);
+        $category = Category::create(['category' => '雑貨']);
 
         $item = Item::create([
             'name' => 'テスト商品',
@@ -64,7 +64,7 @@ class ItemCommentTest extends TestCase
         ]);
 
         $condition = Condition::create(['condition' => '新品']);
-        $category = Category::create(['category_name' => '雑貨']);
+        $category = Category::create(['category' => '雑貨']);
 
         $item = Item::create([
             'name' => 'テスト商品2',
@@ -102,7 +102,7 @@ class ItemCommentTest extends TestCase
         ]);
 
         $condition = Condition::create(['condition' => '新品']);
-        $category = Category::create(['category_name' => '雑貨']);
+        $category = Category::create(['category' => '雑貨']);
 
         $item = Item::create([
             'name' => 'テスト商品3',
@@ -136,7 +136,7 @@ class ItemCommentTest extends TestCase
         ]);
 
         $condition = Condition::create(['condition' => '新品']);
-        $category = Category::create(['category_name' => '雑貨']);
+        $category = Category::create(['category' => '雑貨']);
 
         $item = Item::create([
             'name' => 'テスト商品4',

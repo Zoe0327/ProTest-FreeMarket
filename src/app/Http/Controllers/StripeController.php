@@ -86,7 +86,7 @@ class StripeController extends Controller
                         \App\Models\SoldItem::create([
                             'user_id' => $user->id,
                             'item_id' => $item->id,
-                            'sending_post_code' => $user->profile->post_code ?? '',
+                            'sending_postcode' => $user->profile->postcode ?? '',
                             'sending_address' => $user->profile->address ?? '',
                             'sending_building' => $user->profile->building ?? '',
                             'payment_method' => 'カード払い',

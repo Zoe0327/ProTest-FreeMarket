@@ -25,7 +25,7 @@ class ItemExhibitionTest extends TestCase
 
         // ② 条件とカテゴリを直接作成（Factoryなし）
         $condition = Condition::create(['condition' => '新品']);
-        $category = Category::create(['category_name' => 'カテゴリA']);
+        $category = Category::create(['category' => 'カテゴリA']);
 
         // ③ Itemを直接作成
         $item = Item::create([

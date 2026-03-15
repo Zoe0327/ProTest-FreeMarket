@@ -7,7 +7,12 @@
 .login-form__heading {
     margin-bottom: 30px;
     text-align: center;
-    font-size: 20px;
+}
+
+.login-form__heading h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .form {
@@ -85,10 +90,6 @@
 
     .form {
         width: 65%;
-    }
-
-    .login-form__heading h2 {
-        font-size: 24px;
     }
 }
 

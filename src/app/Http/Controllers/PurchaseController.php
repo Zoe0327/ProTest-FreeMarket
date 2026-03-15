@@ -16,7 +16,7 @@ class PurchaseController extends Controller
     private function getDeliveryAddress($user)
     {
         return session('purchase_address') ?? [
-            'post_code' => $user->profile->post_code ?? '',
+            'postcode' => $user->profile->postcode ?? '',
             'address'   => $user->profile->address ?? '',
             'building'  => $user->profile->building ?? '',
         ];
@@ -69,7 +69,7 @@ class PurchaseController extends Controller
         SoldItem::create([
             'user_id'           => $user->id,
             'item_id'           => $item->id,
-            'sending_post_code' => $address['post_code'],
+            'sending_postcode' => $address['postcode'],
             'sending_address'   => $address['address'],
             'sending_building'  => $address['building'],
             'payment_method'    => $request->payment_method,
@@ -101,7 +101,7 @@ class PurchaseController extends Controller
     public function updateAddress(Request $request, $item_id)
     {
         $request->validate([
-            'post_code' => ['required', 'string', 'max:8'],
+            'postcode' => ['required', 'string', 'max:8'],
             'address'   => ['required', 'string', 'max:255'],
             'building'  => ['nullable', 'string', 'max:255'],
         ]);
@@ -109,7 +109,7 @@ class PurchaseController extends Controller
         // セッションに住所を保存
         session([
             'purchase_address' => [
-                'post_code' => $request->post_code,
+                'postcode' => $request->postcode,
                 'address'   => $request->address,
                 'building'  => $request->building,
             ],

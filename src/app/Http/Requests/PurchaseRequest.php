@@ -24,7 +24,7 @@ class PurchaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'sending_post_code' => 'required|string|size:8',
+            'sending_postcode' => 'required|string|size:8',
             'sending_address' => 'required|string|max:255',
             'sending_building' => 'nullable|string|max:255',
             'payment_method' => 'required|string',
