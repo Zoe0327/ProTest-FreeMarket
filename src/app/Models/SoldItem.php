@@ -27,4 +27,14 @@ class SoldItem extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

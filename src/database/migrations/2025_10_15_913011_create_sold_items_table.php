@@ -14,13 +14,17 @@ class CreateSoldItemsTable extends Migration
     public function up(): void
     {
         Schema::create('sold_items', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->string('sending_postcode');
             $table->string('sending_address');
             $table->string('sending_building')->nullable();
             $table->string('payment_method');
+            $table->string('status')->default('in_progress');
             $table->timestamps();
+
+            $table->unique('item_id');
         });
     }
 

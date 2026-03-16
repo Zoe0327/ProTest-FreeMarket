@@ -11,7 +11,10 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ReviewController;
 
 
 
@@ -54,6 +57,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/items/{item_id}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/items/{item}/like', [ItemController::class, 'toggleLike'])->middleware('auth')->name('items.like');
+
+    Route::get('/transactions/{soldItem}', [TransactionController::class, 'show'])->name('transactions.show');
+
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::patch('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
 Route::post('/checkout', [StripeController::class, 'session'])->name('checkout.session');
