@@ -9,6 +9,14 @@ class Message extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'sold_item_id',
+        'user_id',
+        'message',
+        'message_img_url',
+        'is_read',
+    ];
+
     public function soldItem()
     {
         return $this->belongsTo(SoldItem::class);

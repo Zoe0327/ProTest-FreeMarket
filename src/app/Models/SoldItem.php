@@ -16,6 +16,7 @@ class SoldItem extends Model
         'sending_address',
         'sending_building',
         'payment_method',
+        'status',
     ];
 
     public function user()
@@ -28,6 +29,11 @@ class SoldItem extends Model
         return $this->belongsTo(Item::class);
     }
 
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function messages()
     {
         return $this->hasMany(Message::class);
@@ -36,5 +42,16 @@ class SoldItem extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getPartnerUser($authUserId)
+    {
+        // 自分が購入者なら → 相手は出品者
+        if ($this->user_id == $authUserId) {
+            return $this->item->user;
+        }
+
+        // 自分が出品者なら → 相手は購入者
+        return $this->buyer;
     }
 }

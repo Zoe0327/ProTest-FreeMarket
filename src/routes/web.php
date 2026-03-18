@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/items/{item}/like', [ItemController::class, 'toggleLike'])->middleware('auth')->name('items.like');
 
     Route::get('/transactions/{soldItem}', [TransactionController::class, 'show'])->name('transactions.show');
+    Route::post('/transactions/{soldItem}/complete', [TransactionController::class, 'complete'])->name('transactions.complete');
 
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::patch('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
