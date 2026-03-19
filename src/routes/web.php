@@ -60,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/transactions/{soldItem}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::post('/transactions/{soldItem}/complete', [TransactionController::class, 'complete'])->name('transactions.complete');
+    Route::post('/transactions/{soldItem}/complete', [TransactionController::class, 'complete'])
+    ->name('transactions.complete');
 
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::patch('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');

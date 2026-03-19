@@ -38,6 +38,26 @@
     font-weight: bold;
     margin-right: 20px;
 }
+.mypage__rating {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.mypage__star {
+    font-size: 28px;
+    color: #d9d9d9;
+}
+
+.mypage__star--filled {
+    color: #f7d84a;
+}
+
+.edit__button-submit {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
 
 .mypage__edit {
     flex-shrink: 0;
@@ -93,6 +113,23 @@
     border-bottom: 2px solid #FF0000;
 }
 
+.mypage-tab__badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 999px;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    box-sizing: border-box;
+}
+
 /* =============================== */
 /* 商品一覧部分 */
 /* =============================== */
@@ -134,6 +171,47 @@
     font-size: 16px;
     color: #333;
     text-align: left;
+}
+
+.mypage-item__each--trading {
+    position: relative;
+}
+
+.mypage-item__badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.mypage-item__dot {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.mypage-empty {
+    text-align: center;
+    color: #999;
+    margin-top: 40px;
+    font-size: 16px;
 }
 
 /* =============================== */

@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\Item;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -16,8 +15,12 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
+        $userA = User::where('email', 'userA@example.com')->first();
+        $userB = User::where('email', 'userB@example.com')->first();
+
         $items = [
             [
+                'user_id' => $userA->id,
                 'name' => '腕時計',
                 'price' => 15000,
                 'brand_name' => 'Rolax',
@@ -26,6 +29,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 1,
             ],
             [
+                'user_id' => $userA->id,
                 'name' => 'HDD',
                 'price' => 5000,
                 'brand_name' => '西芝',
@@ -34,6 +38,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 2,
             ],
             [
+                'user_id' => $userA->id,
                 'name' => '玉ねぎ3束',
                 'price' => 300,
                 'brand_name' => null,
@@ -42,6 +47,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 3,
             ],
             [
+                'user_id' => $userA->id,
                 'name' => '革靴',
                 'price' => 4000,
                 'brand_name' => null,
@@ -50,6 +56,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 4,
             ],
             [
+                'user_id' => $userA->id,
                 'name' => 'ノートPC',
                 'price' => 45000,
                 'brand_name' => null,
@@ -58,6 +65,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 1,
             ],
             [
+                'user_id' => $userB->id,
                 'name' => 'マイク',
                 'price' => 8000,
                 'brand_name' => null,
@@ -66,6 +74,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 2,
             ],
             [
+                'user_id' => $userB->id,
                 'name' => 'ショルダーバッグ',
                 'price' => 3500,
                 'brand_name' => null,
@@ -74,6 +83,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 3,
             ],
             [
+                'user_id' => $userB->id,
                 'name' => 'タンブラー',
                 'price' => 500,
                 'brand_name' => null,
@@ -82,6 +92,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 4,
             ],
             [
+                'user_id' => $userB->id,
                 'name' => 'コーヒーミル',
                 'price' => 4000,
                 'brand_name' => 'Starbacks',
@@ -90,6 +101,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => 1,
             ],
             [
+                'user_id' => $userB->id,
                 'name' => 'メイクセット',
                 'price' => 2500,
                 'brand_name' => null,
@@ -100,17 +112,7 @@ class ItemsTableSeeder extends Seeder
         ];
 
         foreach ($items as $item) {
-            DB::table('items')->insert([
-                'name' => $item['name'],
-                'price' => $item['price'],
-                'brand_name' => $item['brand_name'],
-                'description' => $item['description'],
-                'item_img_url' => $item['item_img_url'],
-                'condition_id' => $item['condition_id'],
-                'user_id' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
+            Item::create($item);
         }
     }
 }

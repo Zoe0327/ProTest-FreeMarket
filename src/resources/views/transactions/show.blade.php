@@ -183,8 +183,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const ratingInput = document.getElementById('rating-value');
 
     stars.forEach(star => {
+        star.classList.add('review-star--inactive');
+
         star.addEventListener('click', function () {
-            const value = this.dataset.value;
+            const value = Number(this.dataset.value);
 
             ratingInput.value = value;
 
@@ -193,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             stars.forEach(s => {
-                if (s.dataset.value <= value) {
+                if (Number(s.dataset.value) <= value) {
                     s.classList.remove('review-star--inactive');
                 }
             });

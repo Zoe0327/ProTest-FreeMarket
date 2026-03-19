@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Review;
+use App\Models\SoldItem;
+
 use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
@@ -13,18 +16,57 @@ class ProfileController extends Controller
     // マイページ表示
     public function index(Request $request)
     {
-        /** @var User $user */
+        /** @var \App\Models\User $user */
         $user = Auth::user();
+        $profile = $user->profile;
 
         if ($request->query('page') === 'buy') {
-            $items = $user->purchases ?? collect();
-            return view('profile.buy', compact('user', 'items'));
-        } elseif ($request->query('page') === 'sell') {
-            $items = $user->sells ?? collect();
-            return view('profile.sell', compact('user', 'items'));
+            $items = $user->soldItems ?? collect();
+            return view('profile.buy', compact('user', 'profile', 'items'));
         }
 
-        return view('profile.show', compact('user'));
+        if ($request->query('page') === 'sell') {
+            $items = $user->items ?? collect();
+            return view('profile.sell', compact('user', 'profile', 'items'));
+        }
+
+        $averageRating = Review::where('reviewed_user_id', $user->id)->avg('rating');
+        $reviewCount = Review::where('reviewed_user_id', $user->id)->count();
+
+        $inProgressTransactions = SoldItem::with(['item'])
+            ->withCount(['messages as unread_count' => function ($query) {
+                $query->where('user_id', '!=', Auth::id())
+                    ->where('is_read', false);
+            }])
+            ->withMax('messages', 'created_at')
+            ->where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->orWhereHas('item', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
+            })
+            ->where(function ($query) use ($user) {
+                $query->where('status', 'in_progress')
+                    ->orWhere(function ($q) use ($user) {
+                        $q->where('status', 'completed')
+                        ->whereDoesntHave('reviews', function ($reviewQuery) use ($user) {
+                            $reviewQuery->where('reviewer_id', $user->id);
+                        });
+                    });
+            })
+            ->orderByDesc('messages_max_created_at')
+            ->get();
+
+        $totalUnreadCount = $inProgressTransactions->sum('unread_count');
+
+        return view('profile.show', compact(
+            'user',
+            'profile',
+            'averageRating',
+            'reviewCount',
+            'inProgressTransactions',
+            'totalUnreadCount'
+        ));
     }
 
     // 編集フォーム

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SoldItem;
 use App\Models\Review;
+use App\Mail\TransactionCompletedMail;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -68,14 +70,25 @@ class TransactionController extends Controller
 
     public function complete($soldItemId)
     {
-        $soldItem = SoldItem::findOrFail($soldItemId);
+        $soldItem = SoldItem::with(['item.user', 'user'])->findOrFail($soldItemId);
+
+        // 購入者のみ取引完了できる
         if (Auth::id() !== $soldItem->user_id) {
             abort(403);
+        }
+
+        // すでに完了済みならそのまま戻す
+        if ($soldItem->status === 'completed') {
+            return redirect()->route('transactions.show', $soldItem->id);
         }
 
         $soldItem->update([
             'status' => 'completed',
         ]);
+
+        // 出品者へメール送信
+        Mail::to($soldItem->item->user->email)
+            ->send(new TransactionCompletedMail($soldItem));
 
         return redirect()->route('transactions.show', $soldItem->id);
     }
