@@ -5,7 +5,7 @@ FreeMarket
 ## 環境構築
 
 Dockerビルド
-・ git clone git@github.com:Zoe0327/FreeMarket.git
+・ git clone git clone git@github.com:Zoe0327/ProTest-FreeMarket.git
 ・ docker-compose up -d --build
 \*MySQLは、OSによって起動しない場合があるのでそれぞれのPCに併せてdocker-compose.ymlファイルを編集してください。
 
