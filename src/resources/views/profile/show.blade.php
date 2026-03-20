@@ -27,9 +27,8 @@
                         @endif
                     @endfor
                 </div>
-            </div>
-        @endif
-    </div>
+            @endif
+        </div>
 
         <div class="mypage__edit">
             <a href="{{ route('mypage.edit') }}" class="edit__button-submit">プロフィールを編集</a>
@@ -40,7 +39,8 @@
         <div class="mypage-form__page">
             <a href="javascript:void(0)" class="tab-link active" data-target="sell">出品した商品</a>
             <a href="javascript:void(0)" class="tab-link" data-target="buy">購入した商品</a>
-            <a href="javascript:void(0)" class="tab-link" data-target="trading">取引中の商品
+            <a href="javascript:void(0)" class="tab-link" data-target="trading">
+                取引中の商品
                 @if($totalUnreadCount > 0)
                     <span class="mypage-tab__badge">{{ $totalUnreadCount }}</span>
                 @endif

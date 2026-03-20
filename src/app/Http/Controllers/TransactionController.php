@@ -65,7 +65,9 @@ class TransactionController extends Controller
             // モーダル表示条件
             $shouldShowModal = !$alreadyReviewed && $soldItem->status === 'completed';
 
-        return view('transactions.show', compact('soldItem', 'partner', 'transactions', 'shouldShowModal'));
+            $isCompleted = $soldItem->status === 'completed';
+
+        return view('transactions.show', compact('soldItem', 'partner', 'transactions', 'shouldShowModal', 'isCompleted'));
     }
 
     public function complete($soldItemId)

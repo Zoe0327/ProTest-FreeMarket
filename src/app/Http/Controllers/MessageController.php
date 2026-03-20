@@ -21,6 +21,10 @@ class MessageController extends Controller
             abort(403);
         }
 
+        if ($soldItem->status === 'completed') {
+            abort(403, '取引完了後はメッセージを送信できません。');
+        }
+
         $messageImgUrl = null;
 
         if ($request->hasFile('message_img_url')) {
@@ -35,7 +39,7 @@ class MessageController extends Controller
             'user_id' => Auth::id(),
             'message' => $request->message,
             'message_img_url' => $messageImgUrl,
-            'is_read' =>false,
+            'is_read' => false,
         ]);
 
         return redirect()->route('transactions.show', $soldItem->id);
@@ -45,6 +49,10 @@ class MessageController extends Controller
     {
         if ($message->user_id !== Auth::id()) {
             abort(403);
+        }
+
+        if ($message->soldItem->status === 'completed') {
+            abort(403, '取引完了後はメッセージを編集できません。');
         }
 
         $request->validate([
@@ -62,6 +70,10 @@ class MessageController extends Controller
     {
         if ($message->user_id !== Auth::id()) {
             abort(403);
+        }
+
+        if ($message->soldItem->status === 'completed') {
+            abort(403, '取引完了後はメッセージを削除できません。');
         }
 
         $message->delete();

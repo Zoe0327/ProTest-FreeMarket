@@ -46,6 +46,7 @@
                 <p>￥{{ number_format($soldItem->item->price) }}</p>
             </div>
         </div>
+
         <div class="transaction-chat">
             @foreach($soldItem->messages as $message)
                 @if(Auth::id() === $message->user_id)
@@ -60,7 +61,7 @@
                         </div>
 
                         <div class="chat-message-body chat-message-body--right">
-                            @if(request('edit_message') == $message->id)
+                            @if(!$isCompleted && request('edit_message') == $message->id)
                                 <form action="{{ route('messages.update', $message->id) }}" method="POST" class="chat-message-edit-form">
                                     @csrf
                                     @method('PATCH')
@@ -81,16 +82,18 @@
                             @endif
                         </div>
 
-                        <div class="chat-message-actions">
-                            <a href="{{ route('transactions.show', ['soldItem' => $soldItem->id, 'edit_message' => $message->id]) }}" class="chat-message-action-link">
-                                編集
-                            </a>
-                            <form action="{{ route('messages.destroy', $message->id) }}" method="POST" style="display:inline;" class="chat-message-delete-form">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="chat-message-action-button" onclick="return confirm('削除しますか？')">削除</button>
-                            </form>
-                        </div>
+                        @if(!$isCompleted)
+                            <div class="chat-message-actions">
+                                <a href="{{ route('transactions.show', ['soldItem' => $soldItem->id, 'edit_message' => $message->id]) }}" class="chat-message-action-link">
+                                    編集
+                                </a>
+                                <form action="{{ route('messages.destroy', $message->id) }}" method="POST" style="display:inline;" class="chat-message-delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="chat-message-action-button" onclick="return confirm('削除しますか？')">削除</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 @else
                     <div class="chat-message chat-message--left">
@@ -114,29 +117,38 @@
                 @endif
             @endforeach
         </div>
-        <div class="transaction-chat-form">
-            @if ($errors->any())
-                <div class="chat-form-error">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
-            @endif
-            <form action="{{ route('messages.store') }}" method="POST" enctype="multipart/form-data" class="chat-form">
-                @csrf
-                <input type="hidden" name="sold_item_id" value="{{ $soldItem->id }}">
-                <textarea name="message" class="chat-form-textarea" placeholder="取引メッセージを記入してください">{{ old('message') }}</textarea>
 
-                <div class="chat-form-actions">
-                    <label for="message_img" class="chat-form-image-label">画像を追加</label>
-                    <input type="file" name="message_img_url" id="message_img" class="chat-form-file">
+        @if(!$isCompleted)
+            <div class="transaction-chat-form">
+                @if ($errors->any())
+                    <div class="chat-form-error">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
 
-                    <button type="submit" class="chat-form-submit">
-                        <img src="{{ asset('storage/item_images/紙飛行機マーク.jpg') }}" alt="送信">
-                    </button>
-                </div>
-            </form>
-        </div>
+                <form action="{{ route('messages.store') }}" method="POST" enctype="multipart/form-data" class="chat-form">
+                    @csrf
+                    <input type="hidden" name="sold_item_id" value="{{ $soldItem->id }}">
+
+                    <textarea name="message" class="chat-form-textarea" placeholder="取引メッセージを記入してください">{{ old('message') }}</textarea>
+
+                    <div class="chat-form-actions">
+                        <label for="message_img" class="chat-form-image-label">画像を追加</label>
+                        <input type="file" name="message_img_url" id="message_img" class="chat-form-file">
+
+                        <button type="submit" class="chat-form-submit">
+                            <img src="{{ asset('storage/item_images/紙飛行機マーク.jpg') }}" alt="送信">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        @else
+            <p class="chat-completed-message">
+                この取引は完了しているため、メッセージの送信はできません。
+            </p>
+        @endif
     </main>
 </div>
 
