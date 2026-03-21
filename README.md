@@ -29,7 +29,11 @@ FreeMarket
  DB_PASSWORD=laravel_pass
 ```
 
-※ DB_HOST は Docker Compose の MySQL サービス名に合わせて設定してください。 デフォルトでは mysql ですが、環境によって自動生成されるコンテナ名になることがあります。5. アプリケーションキーの作成 php artisan key:generate 6. マイグレーションの実行 php artisan migrate 7. シーディングの実行 php artisan db:seed 8. ストレージリンクの作成 php artisan storage:link
+※ DB_HOST は Docker Compose の MySQL サービス名に合わせて設定してください。 デフォルトでは mysql ですが、環境によって自動生成されるコンテナ名になることがあります。
+5. アプリケーションキーの作成 php artisan key:generate
+6. マイグレーションの実行 php artisan migrate
+7. シーディングの実行 php artisan db:seed
+8. ストレージリンクの作成 php artisan storage:link
 
 ## 使用技術（実行環境）
 
