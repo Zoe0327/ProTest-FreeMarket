@@ -89,36 +89,36 @@ FreeMarket
 
 ・メール認証の際はMailtrapにログインした状態で会員登録を行いメールの認証を実行する。
 ・.envのMAILの修正
-　MAIL_HOST=sandbox.smtp.mailtrap.io
-　MAIL_PORT=2525
-　MAIL_USERNAME=xxx（自身のアカウントを参照）
-　MAIL_PASSWORD=xxx（自身のアカウントを参照）
-　MAIL_ENCRYPTION=tls
-　MAIL_FROM_ADDRESS=noreply@example.com
-　MAIL_FROM_NAME="${APP_NAME}"
+  MAIL_HOST=sandbox.smtp.mailtrap.io
+  MAIL_PORT=2525
+  MAIL_USERNAME=xxx（自身のアカウントを参照）
+  MAIL_PASSWORD=xxx（自身のアカウントを参照）
+  MAIL_ENCRYPTION=tls
+  MAIL_FROM_ADDRESS=noreply@example.com
+  MAIL_FROM_NAME="${APP_NAME}"
 
 ## Stripe テスト購入（ローカルで SoldItem 確認）
 
 1. .env に Stripe テストキーを追加
-   　（各自の Stripe アカウントで取得してください）
-   STRIPE_KEY=pk_test_xxx
-   STRIPE_SECRET=sk_test_xxx
-   STRIPE_WEBHOOK_SECRET=whsec_xxx
+ （各自の Stripe アカウントで取得してください）
+ STRIPE_KEY=pk_test_xxx
+ STRIPE_SECRET=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
 2. Stripe CLI で Webhook をローカルに転送
-   　ターミナルで下記のstripe listenを実行してからカード決済ボタンをクリックする。
-   stripe listen --forward-to http://localhost/stripe/webhook
+  ターミナルで下記のstripe listenを実行してからカード決済ボタンをクリックする。
+ stripe listen --forward-to http://localhost/stripe/webhook
 3. ブラウザで商品購入 → Stripe Checkout でテスト決済
-   ・テストカード番号：4242 4242 4242 4242
-   ・有効期限：任意未来日
-   ・CVC：任意
+ ・テストカード番号：4242 4242 4242 4242
+ ・有効期限：任意未来日
+ ・CVC：任意
 4. Stripe CLI のターミナルでイベントが転送されることを確認
 5. Laravel DB に SoldItem が作成されていることを確認
-   php artisan tinker
-   > > > \App\Models\SoldItem::all();
+ php artisan tinker
+ > > > \App\Models\SoldItem::all();
 6. 商品一覧ページで「SOLD」と表示されることを確認
-   ※注意
-   ・WSL2 + Docker 環境では php artisan serve は使わず、Nginx を通した localhost URL を使用
-   ・本番環境では Webhook は Stripe ダッシュボードに設定した公開 URL に届くため、ここでの手順は 開発環境用テスト手順 とする
+ ※注意
+ ・WSL2 + Docker 環境では php artisan serve は使わず、Nginx を通した localhost URL を使用
+ ・本番環境では Webhook は Stripe ダッシュボードに設定した公開 URL に届くため、ここでの手順は 開発環境用テスト手順 とする
 
 ## PHPunitテスト
 
