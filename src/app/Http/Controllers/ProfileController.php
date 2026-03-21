@@ -33,9 +33,11 @@ class ProfileController extends Controller
         $averageRating = Review::where('reviewed_user_id', $user->id)->avg('rating');
         $reviewCount = Review::where('reviewed_user_id', $user->id)->count();
 
+        $authId = Auth::id();
+
         $inProgressTransactions = SoldItem::with(['item'])
-            ->withCount(['messages as unread_count' => function ($query) {
-                $query->where('user_id', '!=', Auth::id())
+            ->withCount(['messages as unread_count' => function ($query) use ($authId) {
+                $query->where('user_id', '!=', $authId)
                     ->where('is_read', false);
             }])
             ->withMax('messages', 'created_at')
