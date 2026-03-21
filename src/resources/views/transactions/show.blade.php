@@ -221,21 +221,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('chat-message');
 
     if (textarea) {
-        // 保存データ復元
-        const savedMessage = localStorage.getItem('chat_message');
+        const key = 'chat_message_' + {{ $soldItem->id }};
+
+        // 復元
+        const savedMessage = localStorage.getItem(key);
         if (savedMessage) {
             textarea.value = savedMessage;
         }
 
-        // 入力時保存
+        // 保存
         textarea.addEventListener('input', function () {
-            localStorage.setItem('chat_message', textarea.value);
+            localStorage.setItem(key, textarea.value);
         });
 
         // 送信時削除
         const form = textarea.closest('form');
         form.addEventListener('submit', function () {
-            localStorage.removeItem('chat_message');
+            localStorage.removeItem(key);
         });
     }
 });
