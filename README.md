@@ -4,23 +4,32 @@ FreeMarket
 
 ## 環境構築
 
-Dockerビルド
-・ git clone git clone git@github.com:Zoe0327/ProTest-FreeMarket.git
-・ docker-compose up -d --build
+### Dockerビルド
+
+```bash
+ git clone git@github.com:Zoe0327/ProTest-FreeMarket.git
+ docker-compose up -d --build
+```
+
 \*MySQLは、OSによって起動しない場合があるのでそれぞれのPCに併せてdocker-compose.ymlファイルを編集してください。
 
-Laravel環境構築
+### Laravel環境構築
 
 1. docker-compose exec php bash
 2. composer install
 3. .env.exampleを.env にリネーム、または新しく.env作成
-4. .envに以下の環境変数を追加 --text
-   DB_CONNECTION=mysql DB_HOST=mysql DB_PORT=3306 DB_DATABASE=laravel_db DB_USERNAME=laravel_user DB_PASSWORD=laravel_pass
-   ※ DB_HOST は Docker Compose の MySQL サービス名に合わせて設定してください。 デフォルトでは mysql ですが、環境によって自動生成されるコンテナ名になることがあります。
-5. アプリケーションキーの作成 php artisan key:generate
-6. マイグレーションの実行 php artisan migrate
-7. シーディングの実行 php artisan db:seed
-8. ストレージングの作成 php artisan storage:link
+4. .envに以下の環境変数を追加
+
+```env
+ DB_CONNECTION=mysql
+ DB_HOST=mysql
+ DB_PORT=3306
+ DB_DATABASE=laravel_db
+ DB_USERNAME=laravel_user
+ DB_PASSWORD=laravel_pass
+```
+
+※ DB_HOST は Docker Compose の MySQL サービス名に合わせて設定してください。 デフォルトでは mysql ですが、環境によって自動生成されるコンテナ名になることがあります。5. アプリケーションキーの作成 php artisan key:generate 6. マイグレーションの実行 php artisan migrate 7. シーディングの実行 php artisan db:seed 8. ストレージリンクの作成 php artisan storage:link
 
 ## 使用技術（実行環境）
 
@@ -52,8 +61,29 @@ Laravel環境構築
 
 ・購入状態の判定は sold_items テーブルで行い、該当商品が存在する場合に「SOLD」を表示。
 ・ログイン中のユーザーが自分の出品した商品を開いた場合、購入ボタンが表示されないように設定。
- （自分の商品を自分で購入できないため）
+（自分の商品を自分で購入できないため）
 ・取引完了後はメッセージの投稿・編集・削除ができないように制御しています
+
+## テスト用アカウント
+
+以下のアカウントでログイン可能です。
+
+### ユーザーA (5商品紐づけされている)
+
+- メールアドレス：userA@example.com
+- パスワード：password123
+
+### ユーザーB (5商品紐づけされている)
+
+- メールアドレス：userB@example.com
+- パスワード：password123
+
+### ユーザーC (何も紐づけられていない)
+
+- メールアドレス：userC@example.com
+- パスワード：password123
+
+※ 上記アカウントは `php artisan db:seed` 実行時に作成されます
 
 ## Mailtrap（メール送信テスト用）
 
@@ -76,7 +106,7 @@ Laravel環境構築
    STRIPE_WEBHOOK_SECRET=whsec_xxx
 2. Stripe CLI で Webhook をローカルに転送
    　ターミナルで下記のstripe listenを実行してからカード決済ボタンをクリックする。
-   "stripe listen --forward-to http://localhost/stripe/webhook"
+   stripe listen --forward-to http://localhost/stripe/webhook
 3. ブラウザで商品購入 → Stripe Checkout でテスト決済
    ・テストカード番号：4242 4242 4242 4242
    ・有効期限：任意未来日
@@ -92,5 +122,15 @@ Laravel環境構築
 
 ## PHPunitテスト
 
-1. テスト用データベースを作成 docker-compose exec mysql mysql -u root -pにログイン後CREATE DATABASE demo_test;を実行
-2. PHPUnitでテストを実行 docker-compose exec php php artisan test
+1. テスト用データベースを作成
+
+```bash
+docker-compose exec mysql mysql -u root -p
+CREATE DATABASE demo_test;
+```
+
+2. PHPUnitでテストを実行
+
+```bash
+docker-compose exec php php artisan test
+```
