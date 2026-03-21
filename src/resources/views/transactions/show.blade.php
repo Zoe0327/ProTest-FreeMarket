@@ -132,7 +132,7 @@
                     @csrf
                     <input type="hidden" name="sold_item_id" value="{{ $soldItem->id }}">
 
-                    <textarea name="message" class="chat-form-textarea" placeholder="取引メッセージを記入してください">{{ old('message') }}</textarea>
+                    <textarea id="chat-message" name="message" class="chat-form-textarea" placeholder="取引メッセージを記入してください">{{ old('message') }}</textarea>
 
                     <div class="chat-form-actions">
                         <label for="message_img" class="chat-form-image-label">画像を追加</label>
@@ -217,6 +217,27 @@ document.addEventListener('DOMContentLoaded', function () {
     @if($shouldShowModal)
         openModal();
     @endif
+
+    const textarea = document.getElementById('chat-message');
+
+    if (textarea) {
+        // 保存データ復元
+        const savedMessage = localStorage.getItem('chat_message');
+        if (savedMessage) {
+            textarea.value = savedMessage;
+        }
+
+        // 入力時保存
+        textarea.addEventListener('input', function () {
+            localStorage.setItem('chat_message', textarea.value);
+        });
+
+        // 送信時削除
+        const form = textarea.closest('form');
+        form.addEventListener('submit', function () {
+            localStorage.removeItem('chat_message');
+        });
+    }
 });
 </script>
 @endsection
