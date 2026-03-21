@@ -139,7 +139,7 @@
                         <input type="file" name="message_img_url" id="message_img" class="chat-form-file">
 
                         <button type="submit" class="chat-form-submit">
-                            <img src="{{ asset('storage/item_images/紙飛行機マーク.jpg') }}" alt="送信">
+                            <img src="{{ asset('images/紙飛行機マーク.jpg') }}" alt="送信">
                         </button>
                     </div>
                 </form>

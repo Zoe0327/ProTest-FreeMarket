@@ -14,7 +14,7 @@
             <div class="header-utilities">
 
                 <a href="{{ route('items.index') }}" class="header__logo">
-                    <img src="{{ asset('storage/item_images/logo.svg') }}" alt="COACHTECH" class="header__logo-img">
+                    <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo-img">
                 </a>
 
                 <form action="{{ route('items.index') }}" method="get" class="header__search">
