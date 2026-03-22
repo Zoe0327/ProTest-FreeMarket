@@ -40,7 +40,9 @@ class ProfileController extends Controller
                 $query->where('user_id', '!=', $authId)
                     ->where('is_read', false);
             }])
-            ->withMax('messages', 'created_at')
+            ->withMax(['messages as partner_message_max_created_at' => function ($query) use ($authId) {
+                $query->where('user_id', '!=', $authId);
+            }], 'created_at')
             ->where(function ($query) use ($user) {
                 $query->where('user_id', $user->id)
                     ->orWhereHas('item', function ($q) use ($user) {
@@ -51,12 +53,12 @@ class ProfileController extends Controller
                 $query->where('status', 'in_progress')
                     ->orWhere(function ($q) use ($user) {
                         $q->where('status', 'completed')
-                        ->whereDoesntHave('reviews', function ($reviewQuery) use ($user) {
-                            $reviewQuery->where('reviewer_id', $user->id);
-                        });
+                            ->whereDoesntHave('reviews', function ($reviewQuery) use ($user) {
+                                $reviewQuery->where('reviewer_id', $user->id);
+                            });
                     });
             })
-            ->orderByDesc('messages_max_created_at')
+            ->orderByDesc('partner_message_max_created_at')
             ->get();
 
         $totalUnreadCount = $inProgressTransactions->sum('unread_count');

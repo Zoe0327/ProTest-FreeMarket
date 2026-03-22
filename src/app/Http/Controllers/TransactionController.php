@@ -46,6 +46,7 @@ class TransactionController extends Controller
             'item.user.profile',
             'user.profile',
         ])
+            ->withMax('messages', 'created_at')
             ->where('id', '!=', $soldItem->id)
             ->where(function ($query) {
                 $query->where('user_id', Auth::id())
@@ -53,7 +54,7 @@ class TransactionController extends Controller
                         $q->where('user_id', Auth::id());
                     });
             })
-            ->latest()
+            ->orderByDesc('messages_max_created_at')
             ->get();
 
 
